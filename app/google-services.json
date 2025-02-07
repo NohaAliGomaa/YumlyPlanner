@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "230636474613",
+    "project_id": "yumly-planner",
+    "storage_bucket": "yumly-planner.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230636474613:android:8f0dc71b77610b51a2b5bc",
+        "android_client_info": {
+          "package_name": "com.example.yumlyplanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgWYbCp3rnW3ygTQNchSqSv_zhWmfxfKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
