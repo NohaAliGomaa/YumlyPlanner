@@ -12,7 +12,20 @@
           "package_name": "com.example.yumlyplanner"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "230636474613-36vjgn23bv7sv288psg2vhn7m6q6i9co.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yumlyplanner",
+            "certificate_hash": "9d75e34dc8e91a980436f83043fc25f6ceedc509"
+          }
+        },
+        {
+          "client_id": "230636474613-erhri1njdv3460iksib5a5j86afso5jq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCgWYbCp3rnW3ygTQNchSqSv_zhWmfxfKI"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230636474613-erhri1njdv3460iksib5a5j86afso5jq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
