@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     implementation (libs.lottie)
+    implementation (libs.com.google.firebase.firebase.auth)
+    implementation (libs.play.services.auth.v2070)
 //    implementation(libs.rxjava3.retrofit)
 //    implementation (libs.rxjava)
 //    implementation (libs.rxandroid)
