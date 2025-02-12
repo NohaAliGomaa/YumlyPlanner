@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation (libs.lottie)
 //    implementation(libs.rxjava3.retrofit)
 //    implementation (libs.rxjava)
 //    implementation (libs.rxandroid)
