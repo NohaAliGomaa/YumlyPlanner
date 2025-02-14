@@ -39,7 +39,6 @@ public class LoginFragment extends Fragment {
     private TextInputEditText email;
     private TextInputEditText password;
     private FirebaseAuth mAuth;
-    private View currentView;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient googleSignInClient;
     public LoginFragment() {
@@ -61,7 +60,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        currentView=view;
         SignInButton signInButton = view.findViewById(R.id.btnGoogleSignIn);
         login=view.findViewById(R.id.btn_login);
         signUp=view.findViewById(R.id.signUpButton);
@@ -88,6 +86,7 @@ public class LoginFragment extends Fragment {
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -96,10 +95,10 @@ public class LoginFragment extends Fragment {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
-                Navigation.findNavController(currentView).navigate(R.id.action_loginFragment_to_homeFragment);
+                Navigation.findNavController(this.requireView()).navigate(R.id.action_loginFragment_to_homeFragment);
             } catch (ApiException e) {
                 Log.w("GoogleSignIn", "Google sign-in failed", e);
-                Toast.makeText(getContext(), "Google sign-in failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Google sign-in failed!" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -109,10 +108,10 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(getContext(), "Signed in as: " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(currentView).navigate(R.id.action_loginFragment_to_homeFragment);
+                        Toast.makeText(getContext(), "Signed in as: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(this.requireView()).navigate(R.id.action_loginFragment_to_homeFragment);
                     } else {
-                        Toast.makeText(getContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Authentication Failed! " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -137,7 +136,7 @@ public class LoginFragment extends Fragment {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null ) {
                             Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_SHORT).show();
-                            Navigation.findNavController(currentView).navigate(R.id.action_loginFragment_to_homeFragment);
+                            Navigation.findNavController(this.requireView()).navigate(R.id.action_loginFragment_to_homeFragment);
                         } else {
                             Toast.makeText(getContext(), "Please verify your email!", Toast.LENGTH_LONG).show();
                         }
