@@ -1,4 +1,4 @@
-package com.example.yumlyplanner;
+package com.example.yumlyplanner.model;
 
 import java.util.List;
 

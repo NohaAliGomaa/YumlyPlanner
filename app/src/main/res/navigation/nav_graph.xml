@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.yumlyplanner.SplashFragment"
+        android:name="com.example.yumlyplanner.splashfragment.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/splah_fragment" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.yumlyplanner.LoginFragment"
+        android:name="com.example.yumlyplanner.loginfragment.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/login_fragment" >
         <action
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.yumlyplanner.HomeFragment"
+        android:name="com.example.yumlyplanner.homefragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.yumlyplanner.RegisterFragment"
+        android:name="com.example.yumlyplanner.registerfragment.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

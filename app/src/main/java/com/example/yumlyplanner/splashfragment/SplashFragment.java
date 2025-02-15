@@ -1,4 +1,4 @@
-package com.example.yumlyplanner;
+package com.example.yumlyplanner.splashfragment;
 
 import android.os.Bundle;
 
@@ -11,11 +11,11 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.navigation.Navigation;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.yumlyplanner.R;
 
 public class SplashFragment extends Fragment {
     LottieAnimationView animationView;

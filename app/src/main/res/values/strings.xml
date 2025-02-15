@@ -9,4 +9,13 @@
     <string name="orwith">OR With</string>
     <string name="DHA">"Don’t have an account ? "</string>
     <string name="default_web_client_id">"230636474613-erhri1njdv3460iksib5a5j86afso5jq.apps.googleusercontent.com"</string>
+    <string name="skip">Skip</string>
+    <string name="creat_acount">Create an account</string>
+    <string name="creat_acount_">Plane Your Meal today!</string>
+    <string name="AHA">"Already have an account? "</string>
+    <string name="signUp">Sign Up</string>
+    <string name="confirm_password">Confirm Your Password</string>
+    <string name="enter_password">Enter Your Password</string>
+    <string name="enter_emiall">Enter Your Email</string>
+    <string name="username">Enter Your User Name</string>
 </resources>
