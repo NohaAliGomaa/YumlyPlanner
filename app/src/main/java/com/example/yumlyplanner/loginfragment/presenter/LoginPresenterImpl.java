@@ -1,23 +1,22 @@
 package com.example.yumlyplanner.loginfragment.presenter;
 
-import com.example.yumlyplanner.loginfragment.view.LoginViewInterface;
-import com.example.yumlyplanner.model.AuthenticationModel;
+import com.example.yumlyplanner.loginfragment.view.LoginView;
 import com.example.yumlyplanner.model.AuthenticationModelImpl;
-import com.example.yumlyplanner.model.FireBaseCallBack;
+import com.example.yumlyplanner.model.LoginCallBack;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPresenterImpl implements LoginPresenter{
-    private final LoginViewInterface view;
+    private final LoginView view;
     private final AuthenticationModelImpl model;
 
-    public LoginPresenterImpl(LoginViewInterface view) {
+    public LoginPresenterImpl(LoginView view) {
         this.view = view;
         this.model = new AuthenticationModelImpl();
     }
 
     @Override
     public void handleEmailLogin(String email, String password) {
-        model.loginWithEmail(email, password, new FireBaseCallBack() {
+        model.loginWithEmail(email, password, new LoginCallBack() {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.showLoginSuccess( );
@@ -33,7 +32,7 @@ public class LoginPresenterImpl implements LoginPresenter{
 
     @Override
     public void handleGoogleLogin(String idToken) {
-        model.loginWithGoogle(idToken, new FireBaseCallBack()  {
+        model.loginWithGoogle(idToken, new LoginCallBack()  {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.showGoogleSignSuccess(user.getEmail());

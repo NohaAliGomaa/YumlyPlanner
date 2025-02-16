@@ -10,8 +10,8 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tv_password"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/loginBtn"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="312dp"
         android:layout_height="48dp"
@@ -125,8 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/primeryColor"
-        app:layout_constraintStart_toStartOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintStart_toStartOf="@+id/loginBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <TextView
         android:id="@+id/textView5"
@@ -140,7 +140,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/materialDivider2"
         app:layout_constraintStart_toEndOf="@+id/materialDivider"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnGoogleSignIn"
@@ -165,7 +165,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignIn" />
 
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/registerButton"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="106dp"
         android:layout_height="48dp"
@@ -177,12 +177,14 @@
         app:layout_constraintHorizontal_bias="0.928"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignIn" />
+
     <Button
         android:id="@+id/skipBtn"
         style="?attr/materialIconButtonStyle"
         android:layout_width="58dp"
         android:layout_height="56dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="@color/toneColor"
         android:contentDescription="@string/skip"
         app:icon="@drawable/skip"

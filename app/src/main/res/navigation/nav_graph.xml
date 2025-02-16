@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.yumlyplanner.registerfragment.RegisterFragment"
+        android:name="com.example.yumlyplanner.registerfragment.view.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

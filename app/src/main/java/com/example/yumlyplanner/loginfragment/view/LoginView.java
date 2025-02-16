@@ -1,6 +1,6 @@
 package com.example.yumlyplanner.loginfragment.view;
 
-public interface LoginViewInterface {
+public interface LoginView {
     void showLoginSuccess();
     void showLoginError(String message);
     void navigateToHome();

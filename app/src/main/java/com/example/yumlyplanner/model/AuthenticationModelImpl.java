@@ -13,7 +13,7 @@ public class AuthenticationModelImpl implements AuthenticationModel{
     }
 
     @Override
-    public void loginWithEmail(String email, String password, FireBaseCallBack callback) {
+    public void loginWithEmail(String email, String password, LoginCallBack callback) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -30,7 +30,7 @@ public class AuthenticationModelImpl implements AuthenticationModel{
     }
 
     @Override
-    public void loginWithGoogle(String idToken, FireBaseCallBack callback) {
+    public void loginWithGoogle(String idToken, LoginCallBack callback) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
@@ -39,6 +39,19 @@ public class AuthenticationModelImpl implements AuthenticationModel{
                         callback.onSuccess(user);
                     } else {
                         callback.onFailure(task.getException().getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void authenticateWithFirebase(String idToken, RegisterCallBack callback) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                       callback.showOnRegisterSuccess("Registration successful!");
+                    } else {
+                        callback.showOnRegisterError("Registration failed: " + task.getException().getMessage());
                     }
                 });
     }

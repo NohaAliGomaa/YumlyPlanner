@@ -8,9 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.text.TextUtils;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,13 +26,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
 
-public class LoginFragment extends Fragment  implements LoginViewInterface{
+public class LoginFragment extends Fragment  implements LoginView {
     private Button login,signUp;
     private TextInputEditText email;
     private TextInputEditText password;
@@ -68,8 +61,8 @@ public class LoginFragment extends Fragment  implements LoginViewInterface{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SignInButton signInButton = view.findViewById(R.id.btnGoogleSignIn);
-        login=view.findViewById(R.id.btn_login);
-        signUp=view.findViewById(R.id.signUpButton);
+        login=view.findViewById(R.id.loginBtn);
+        signUp=view.findViewById(R.id.registerButton);
         email=view.findViewById(R.id.et_Email);
         password=view.findViewById(R.id.et_Password);
         for (int i = 0; i < signInButton.getChildCount(); i++) {

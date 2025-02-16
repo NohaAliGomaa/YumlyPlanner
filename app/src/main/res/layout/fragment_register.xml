@@ -33,15 +33,15 @@
             app:layout_constraintEnd_toStartOf="@+id/materialDivider3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/materialDivider"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/materialDivider2"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btnGoogleSignIn"
@@ -49,8 +49,8 @@
             android:layout_height="65dp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintStart_toStartOf="@+id/btn_login"
+            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+            app:layout_constraintStart_toStartOf="@+id/loginBtn"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignIn" />
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/loginBtn"
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="312dp"
             android:layout_height="48dp"
@@ -133,8 +133,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:backgroundTint="@color/primeryColor"
-            app:layout_constraintStart_toStartOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+            app:layout_constraintStart_toStartOf="@+id/loginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tv_password"
@@ -187,7 +187,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/signUpButton"
+            android:id="@+id/registerButton"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="106dp"
             android:layout_height="48dp"
@@ -201,20 +201,22 @@
             style="?attr/materialIconButtonStyle"
             android:layout_width="58dp"
             android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:backgroundTint="@color/toneColor"
             android:contentDescription="@string/skip"
             app:icon="@drawable/skip"
-            app:tint="@color/primeryColor"
-            tools:layout_editor_absoluteX="338dp"
-            tools:layout_editor_absoluteY="8dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primeryColor" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/materialDivider3"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         <TextView
             android:id="@+id/textView4"
