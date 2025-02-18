@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App" parent="Theme.Material3.Light">
+        ...
+        <item name="colorSecondary">@color/primeryColor</item>
+        <item name="colorSurface">@color/toneColor</item>
+        <item name="colorOnSurfaceVariant">@color/primeryColor</item>
+        <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.App.Corner.Medium</item>
+    </style>
+
+    <style name="ShapeAppearance.App.Corner.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+</resources>
