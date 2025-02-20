@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.util.Log;
 
+import com.example.yumlyplanner.model.CategoryResponse;
+import com.example.yumlyplanner.model.IngredientResponse;
 import com.example.yumlyplanner.model.MealResponse;
 import com.example.yumlyplanner.model.NetworkCallBack;
 import com.example.yumlyplanner.model.pojo.Meal;
@@ -18,6 +20,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 //import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +33,7 @@ public class MealsRemotDataSourceImpl {
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private static volatile Retrofit retrofit = null;
     private  static MealsRemotDataSourceImpl remotDataSource = null;
-    MealsRemoteDataSource mealsRemoteDataSource;
+    MealsRemoteDataSource  mealsRemoteDataSource;
     List<Meal> meals;
 
     private MealsRemotDataSourceImpl() {
@@ -49,6 +53,7 @@ public class MealsRemotDataSourceImpl {
                     retrofit = new Retrofit.Builder()
                             .baseUrl(BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                             .client(getUnsafeOkHttpClient())
                             .build();
                 }
@@ -83,28 +88,16 @@ public class MealsRemotDataSourceImpl {
             throw new RuntimeException(e);
         }
     }
-    public List<Meal> getRandomMeal(NetworkCallBack networkCallBack){
-        meals=new ArrayList<Meal>();
-        Call<MealResponse> call = mealsRemoteDataSource.getRandomMeal();
-
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    meals=response.body().getMeals();
-                    networkCallBack.onSuccessResult(response.body().getMeals());
-
-
-                } else {
-                    Log.i(TAG, "onResponse: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable t) {
-                networkCallBack.onFailurResult(t.getMessage());
-            }
-        });
-        return meals;
+    public Single<MealResponse> getRandomMeal(){
+        Single<MealResponse> call = mealsRemoteDataSource.getRandomMeal();
+        return call;
+    }
+    public  Single<IngredientResponse> getIngredient(){
+        return  mealsRemoteDataSource.getIngredient();
+    }
+    public  Single<CategoryResponse> getAllCategories()
+    {
+        return  mealsRemoteDataSource.getAllCategories();
     }
 }
 

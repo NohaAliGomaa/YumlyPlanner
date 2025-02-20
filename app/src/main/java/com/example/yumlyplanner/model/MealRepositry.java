@@ -5,6 +5,8 @@ import com.example.yumlyplanner.model.remot.MealsRemotDataSourceImpl;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public class MealRepositry {
     private MealsRemotDataSourceImpl remotDataSource;
     private static MealRepositry mealRepositry=null;
@@ -20,10 +22,15 @@ public class MealRepositry {
         }
         return mealRepositry;
     }
-    public void getRandomMeal(NetworkCallBack networkCallBack)
+    public Single<MealResponse> getRandomMeal()
     {
-
-      remotDataSource.getRandomMeal(networkCallBack);
-
+      return  remotDataSource.getRandomMeal();
+    }
+    public  Single<IngredientResponse> getIngredient(){
+        return  remotDataSource.getIngredient();
+    }
+    public  Single<CategoryResponse> getAllCategories()
+    {
+        return  remotDataSource.getAllCategories();
     }
 }

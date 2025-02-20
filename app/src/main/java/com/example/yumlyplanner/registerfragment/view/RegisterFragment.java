@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yumlyplanner.R;
+import com.example.yumlyplanner.homefragment.view.HomeFragment;
 import com.example.yumlyplanner.registerfragment.presenter.RegisterPresenter;
 import com.example.yumlyplanner.registerfragment.presenter.RegisterPresenterImpl;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class RegisterFragment extends Fragment implements  RegisterView{
@@ -63,8 +71,8 @@ public class RegisterFragment extends Fragment implements  RegisterView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SignInButton signInButton=view.findViewById(R.id.btnGoogleSignIn);
-        login=view.findViewById(R.id.loginBtn);
-        signUp=view.findViewById(R.id.registerButton);
+        login=view.findViewById(R.id.registerButton);
+        signUp=view.findViewById(R.id.loginBtn);
         userName=view.findViewById(R.id.et_Name);
         email=view.findViewById(R.id.et_Email);
         password=view.findViewById(R.id.et_Password);
@@ -72,15 +80,29 @@ public class RegisterFragment extends Fragment implements  RegisterView{
         for (int i = 0; i < signInButton.getChildCount(); i++) {
             View v = signInButton.getChildAt(i);
             if (v instanceof TextView) {
-                ((TextView) v).setText(" Login  with  Google");
+                ((TextView) v).setText(" Sign Up Google");
                 break;
             }
         }
-        signInButton.setOnClickListener(v->signUpWithGoogle(this));
+
+
+        signUp.setOnClickListener(v -> {
+            String userEmail = email.getText().toString().trim();
+            String userPassword = password.getText().toString().trim();
+            if (userEmail.isEmpty() || userPassword.isEmpty()) {
+                showError("Please enter email and password");
+                return;
+            }
+
+            Toast.makeText(getContext(), "Sign-Up Clicked", Toast.LENGTH_SHORT).show(); // Debugging
+            presenter.registerUser(userEmail, userPassword);
+
+        });
+        signInButton.setOnClickListener(v->signUpWithGoogle());
     }
-    public void signUpWithGoogle(Fragment fragment) {
+    public void signUpWithGoogle() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
-        fragment.startActivityForResult(signInIntent, 9002);
+        startActivityForResult(signInIntent, 9002);
     }
 
     @Override
@@ -93,17 +115,31 @@ public class RegisterFragment extends Fragment implements  RegisterView{
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void navigateToHome() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_homeFragment);
-    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_SIGN_IN) {
-            presenter.handleGoogleSignUpResult(GoogleSignIn.getSignedInAccountFromIntent(data));
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+                presenter.signInWithGoogle(credential);
+                new Handler(Looper.getMainLooper()).post(() -> navigateToHome());
+            } catch (ApiException e) {
+                showError("Google sign-in failed");
+            }
         }
     }
+    @Override
+    public void navigateToHome() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_homeFragment);
+//        requireActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, new HomeFragment())
+//                .commit();
+    }
+
     @Override
     public void onResume() {
         super.onResume();

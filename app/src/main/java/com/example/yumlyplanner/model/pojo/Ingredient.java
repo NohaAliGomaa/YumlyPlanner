@@ -1,6 +1,8 @@
 package com.example.yumlyplanner.model.pojo;
 
-public class Ingredient {
+import com.example.yumlyplanner.homefragment.view.BindableItem;
+
+public class Ingredient implements BindableItem {
     private String idIngredient;
     private String strIngredient;
     private String strDescription;
@@ -8,7 +10,7 @@ public class Ingredient {
     private  String thumbIngredient;
 
     public String getThumbIngredient() {
-        return "www.themealdb.com/images/ingredients/"+thumbIngredient+".png";
+        return "www.themealdb.com/images/ingredients/"+strIngredient+".png";
     }
 
     public void setThumbIngredient(String thumbIngredient) {
@@ -64,5 +66,15 @@ public class Ingredient {
                 ", strDescription='" + strDescription + '\'' +
                 ", strType='" + strType + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getTitle() {
+        return getStrIngredient();
+    }
+
+    @Override
+    public String getImageUrl() {
+        return "https://www.themealdb.com/images/ingredients/" + strIngredient + ".png";
     }
 }

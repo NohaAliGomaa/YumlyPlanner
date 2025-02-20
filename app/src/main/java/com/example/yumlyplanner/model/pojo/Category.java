@@ -1,6 +1,8 @@
 package com.example.yumlyplanner.model.pojo;
 
-public class Category {
+import com.example.yumlyplanner.homefragment.view.BindableItem;
+
+public class Category  implements BindableItem {
     private String idCategory;
     private String strCategory;
     private String strCategoryThumb;
@@ -55,6 +57,16 @@ public class Category {
                 ", strCategoryThumb='" + strCategoryThumb + '\'' +
                 ", strCategoryDescription='" + strCategoryDescription + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getTitle() {
+        return getStrCategory();
+    }
+
+    @Override
+    public String getImageUrl() {
+        return getStrCategoryThumb();
     }
 }
 

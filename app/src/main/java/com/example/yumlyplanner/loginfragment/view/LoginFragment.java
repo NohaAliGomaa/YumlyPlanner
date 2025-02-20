@@ -36,6 +36,7 @@ public class LoginFragment extends Fragment  implements LoginView {
     private TextInputEditText email;
     private TextInputEditText password;
     private LoginPresenter presenter;
+    SignInButton signInButton;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient googleSignInClient;
     public LoginFragment() {
@@ -57,17 +58,19 @@ public class LoginFragment extends Fragment  implements LoginView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.login_fragment, container, false);
+        View view=inflater.inflate(R.layout.login_fragment, container, false);
+        signInButton = view.findViewById(R.id.btnGoogleSignIn);
+        login=view.findViewById(R.id.loginBtn);
+        signUp=view.findViewById(R.id.registerButton);
+        email=view.findViewById(R.id.et_Email);
+        password=view.findViewById(R.id.et_Password);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SignInButton signInButton = view.findViewById(R.id.btnGoogleSignIn);
-        login=view.findViewById(R.id.loginBtn);
-        signUp=view.findViewById(R.id.registerButton);
-        email=view.findViewById(R.id.et_Email);
-        password=view.findViewById(R.id.et_Password);
+
         for (int i = 0; i < signInButton.getChildCount(); i++) {
             View v = signInButton.getChildAt(i);
             if (v instanceof TextView) {

@@ -11,7 +11,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="100dp"
             android:text="@string/creat_acount"
             android:textColor="@color/primeryColor"
             android:textSize="24sp"

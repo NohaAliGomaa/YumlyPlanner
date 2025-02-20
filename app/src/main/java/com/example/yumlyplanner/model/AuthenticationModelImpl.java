@@ -55,4 +55,29 @@ public class AuthenticationModelImpl implements AuthenticationModel{
                     }
                 });
     }
+
+    @Override
+    public void registerUser(String email, String password, RegisterCallBack listener) {
+       mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.showOnRegisterSuccess("the register is done");
+                    } else {
+                        listener.showOnRegisterError(task.getException().getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void signInWithGoogle(AuthCredential credential, RegisterCallBack listener) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.showOnRegisterSuccess("register with google is done");
+                    } else {
+                        listener.showOnRegisterError(task.getException().getMessage());
+                    }
+                });
+
+    }
 }

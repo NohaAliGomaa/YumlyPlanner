@@ -52,10 +52,21 @@ dependencies {
     implementation (libs.lottie)
     implementation (libs.com.google.firebase.firebase.auth)
     implementation (libs.play.services.auth.v2070)
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
+    implementation ("com.google.firebase:firebase-auth:22.1.1")
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
-//    implementation(libs.rxjava3.retrofit)
-//    implementation (libs.rxjava)
-//    implementation (libs.rxandroid)
+
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.6")
+
+    implementation("androidx.room:room-rxjava3:2.6.1")
+
+    //implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+    implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
+
 }
