@@ -2,6 +2,8 @@ package com.example.yumlyplanner.homefragment.presenter;
 
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.yumlyplanner.homefragment.view.HomeView;
 import com.example.yumlyplanner.model.MealRepositry;
 import com.example.yumlyplanner.model.NetworkCallBack;
@@ -26,7 +28,7 @@ public class HomePresenterImpl implements HomePresenter, NetworkCallBack {
 
     @Override
     public void onSuccessResult(List<Meal> meals) {
-        if (meals != null && !meals.isEmpty()) {
+        if (meals != null && !meals.isEmpty() && view != null && ((Fragment) view).isAdded()) {
             view.showRandomMeal(meals.get(0));
         } else {
             Log.e(TAG, "onSuccessResult: Received an empty meal list");

@@ -25,4 +25,8 @@
     <string name="instruction">instruction</string>
     <string name="beefChip">Beef</string>
     <string name="chickenChip">Chicken</string>
+    <string name="Category">Category</string>
+    <string name="ingredant">Ingredant</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="country">Country</string>
 </resources>

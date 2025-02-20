@@ -54,4 +54,11 @@ public class SplashFragment extends Fragment {
         super.onDestroyView();
         animationView.cancelAnimation();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+        requireActivity().findViewById(R.id.calenderFragment).setVisibility(View.GONE);
+    }
 }

@@ -104,4 +104,10 @@ public class RegisterFragment extends Fragment implements  RegisterView{
             presenter.handleGoogleSignUpResult(GoogleSignIn.getSignedInAccountFromIntent(data));
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+        requireActivity().findViewById(R.id.calenderFragment).setVisibility(View.GONE);
+    }
 }

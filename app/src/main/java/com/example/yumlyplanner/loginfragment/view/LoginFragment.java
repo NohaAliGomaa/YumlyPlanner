@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 
 
@@ -72,6 +75,9 @@ public class LoginFragment extends Fragment  implements LoginView {
                 break;
             }
         }
+//        if (GoogleSignIn.getLastSignedInAccount(requireContext()) != null) {
+//            navigateToHome();
+//        }
         signInButton.setOnClickListener(v -> signInWithGoogle());
         login.setOnClickListener(v -> presenter.handleEmailLogin(email.getText().toString(), password.getText().toString()));
         signUp.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment));
@@ -89,6 +95,7 @@ public class LoginFragment extends Fragment  implements LoginView {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 presenter.handleGoogleLogin(account.getIdToken());
+                new Handler(Looper.getMainLooper()).post(() -> navigateToHome());
             } catch (ApiException e) {
                 showGoogleSignInError(e.getLocalizedMessage());
             }
@@ -106,9 +113,10 @@ public class LoginFragment extends Fragment  implements LoginView {
 
     @Override
     public void navigateToHome() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment);
+        if (isAdded() && getView() != null) {
+            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
+        }
     }
-
     @Override
     public void showGoogleSignInError(String message) {
         Toast.makeText(getContext(), "Google sign-in failed: " + message, Toast.LENGTH_SHORT).show();
@@ -117,5 +125,12 @@ public class LoginFragment extends Fragment  implements LoginView {
     @Override
     public void showGoogleSignSuccess(String message) {
         Toast.makeText(getContext(), "Google sign-in Success: " + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+        requireActivity().findViewById(R.id.calenderFragment).setVisibility(View.GONE);
     }
 }
