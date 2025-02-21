@@ -1,23 +1,19 @@
 package com.example.yumlyplanner.homefragment.view;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static com.bumptech.glide.Glide.*;
-
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.yumlyplanner.R;
 import com.example.yumlyplanner.homefragment.presenter.HomePresenterImpl;
-import com.example.yumlyplanner.model.AllArea;
+import com.example.yumlyplanner.model.response.AllArea;
 import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Category;
 import com.example.yumlyplanner.model.pojo.Ingredient;
@@ -35,7 +31,7 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeView{
+public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClick{
     private static final String TAG = "HomeFragment";
     private HomePresenterImpl presenter;
     TextView mealTitle,instruction;
@@ -64,13 +60,13 @@ public class HomeFragment extends Fragment implements HomeView{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter=new HomePresenterImpl(this);
+        presenter=new HomePresenterImpl(this,this);
         recyclerView=view.findViewById(R.id.home_RV);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setHasFixedSize(false);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mealTitle=view.findViewById(R.id.mealTitle);
-        mealPhoto=view.findViewById(R.id.mealPhoto);
+        mealPhoto=view.findViewById(R.id.mealPhotoView);
         chipGroup = view.findViewById(R.id.chip_group);
         categoryChip = view.findViewById(R.id.category_chip);
         ingredientChip = view.findViewById(R.id.ingredient_chip);
@@ -87,7 +83,7 @@ public class HomeFragment extends Fragment implements HomeView{
         });
         countryChip.setOnClickListener(v ->{
             List<Area> areas=AllArea.getInstance().getAllArea();
-            HomeAdapter<Area> adapter = new HomeAdapter<>(areas);
+            HomeAdapter<Area> adapter = new HomeAdapter<>(areas,this);
             recyclerView.setAdapter(adapter);
            });
         ingredientChip.setOnClickListener(v->presenter.getIngredient());
@@ -120,13 +116,13 @@ public class HomeFragment extends Fragment implements HomeView{
 
     @Override
     public void showIngredient(List<Ingredient> ingredients) {
-        HomeAdapter<Ingredient> adapter = new HomeAdapter<>(ingredients);
+        HomeAdapter<Ingredient> adapter = new HomeAdapter<>(ingredients,this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void showCategory(List<Category> categories) {
-        HomeAdapter<Category> adapter = new HomeAdapter<>(categories);
+        HomeAdapter<Category> adapter = new HomeAdapter<>(categories,this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -141,5 +137,53 @@ public class HomeFragment extends Fragment implements HomeView{
         super.onResume();
         requireActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         requireActivity().findViewById(R.id.calenderFragment).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void sendMealCountryToDisplay(List<Meal> meals) {
+        HomeAdapter<Meal> adapter = new HomeAdapter<>(meals,this);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void sendMealIngredientsToDisplay(List<Meal> meals) {
+        HomeAdapter<Meal> adapter = new HomeAdapter<>(meals,this);
+        recyclerView.setAdapter(adapter);
+
+
+    }
+
+    @Override
+    public void sendMealCategoryToDisplay(List<Meal> meals ){
+        HomeAdapter<Meal> adapter = new HomeAdapter<>(meals,this);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void categoryName(String category) {
+       presenter.getMealbyCategory(category);
+    }
+
+    @Override
+    public void IngrsdientName(String ingredient) {
+        presenter.getMealbycIngredient(ingredient);
+    }
+
+    @Override
+    public void countryName(String country) {
+        presenter.getMealbyCountry(country);
+    }
+
+    @Override
+    public void navigateMeal() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_mealFragment);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.clear(); // Cancel pending API calls to prevent crashes
     }
 }

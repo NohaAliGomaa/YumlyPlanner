@@ -66,6 +66,9 @@ dependencies {
 
     implementation("androidx.room:room-rxjava3:2.6.1")
 
+    implementation ("com.jakewharton.rxbinding4:rxbinding:4.0.0")
+
+
     //implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
 

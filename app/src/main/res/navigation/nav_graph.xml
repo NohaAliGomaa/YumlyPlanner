@@ -67,17 +67,31 @@
         <action
             android:id="@+id/action_searchFragment_to_mealFragment"
             app:destination="@id/mealFragment" />
+        <action
+            android:id="@+id/action_searchFragment_self"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.yumlyplanner.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_self"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/calenderFragment"
         android:name="com.example.yumlyplanner.Calenderragment"
         android:label="fragment_calenderragment"
-        tools:layout="@layout/fragment_calenderragment" />
+        tools:layout="@layout/fragment_calenderragment" >
+        <action
+            android:id="@+id/action_calenderFragment_self"
+            app:destination="@id/calenderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favouritFragment"
         android:name="com.example.yumlyplanner.FavouritFragment"
@@ -86,10 +100,13 @@
         <action
             android:id="@+id/action_favouritFragment_to_mealFragment"
             app:destination="@id/mealFragment" />
+        <action
+            android:id="@+id/action_favouritFragment_self"
+            app:destination="@id/favouritFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealFragment"
-        android:name="com.example.yumlyplanner.MealFragment"
+        android:name="com.example.yumlyplanner.singlemeal.MealFragment"
         android:label="fragment_meal"
         tools:layout="@layout/fragment_meal" />
 </navigation>

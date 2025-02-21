@@ -1,17 +1,11 @@
 package com.example.yumlyplanner.model.remot;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
-import com.example.yumlyplanner.model.CategoryResponse;
-import com.example.yumlyplanner.model.IngredientResponse;
-import com.example.yumlyplanner.model.MealResponse;
-import com.example.yumlyplanner.model.NetworkCallBack;
+import com.example.yumlyplanner.model.response.CategoryResponse;
+import com.example.yumlyplanner.model.response.IngredientResponse;
+import com.example.yumlyplanner.model.response.MealResponse;
 import com.example.yumlyplanner.model.pojo.Meal;
 
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -23,11 +17,10 @@ import javax.net.ssl.X509TrustManager;
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public class MealsRemotDataSourceImpl {
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
@@ -99,5 +92,28 @@ public class MealsRemotDataSourceImpl {
     {
         return  mealsRemoteDataSource.getAllCategories();
     }
+
+    public Single<MealResponse> getFilteredMealsCountries( String country)
+    {
+        return  mealsRemoteDataSource.getFilteredMealsCountries(country);
+    }
+
+    public Single<MealResponse> getFilteredMealsCategories( String category)
+    {
+        return mealsRemoteDataSource.getFilteredMealsCategories(category);
+    }
+
+     public Single<MealResponse> getFilteredMealsIngredients( String ingredient)
+    {
+        return  mealsRemoteDataSource.getFilteredMealsIngredients(ingredient);
+    }
+     public Single<MealResponse> getDetailedMeal( String mealId)
+     {
+         return  mealsRemoteDataSource.getDetailedMeal(mealId);
+     }
+     public Single<MealResponse> getMealListWithLetter( char letter)
+     {
+         return  mealsRemoteDataSource.getMealListWithLetter(letter);
+     }
 }
 

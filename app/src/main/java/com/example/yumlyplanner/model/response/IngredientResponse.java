@@ -1,4 +1,4 @@
-package com.example.yumlyplanner.model;
+package com.example.yumlyplanner.model.response;
 
 import com.example.yumlyplanner.model.pojo.Ingredient;
 

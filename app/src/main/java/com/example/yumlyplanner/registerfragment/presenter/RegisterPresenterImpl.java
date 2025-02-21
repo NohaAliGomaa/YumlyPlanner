@@ -1,12 +1,6 @@
 package com.example.yumlyplanner.registerfragment.presenter;
 
-import com.example.yumlyplanner.model.AuthenticationModel;
-import com.example.yumlyplanner.model.AuthenticationModelImpl;
-import com.example.yumlyplanner.model.RegisterCallBack;
 import com.example.yumlyplanner.registerfragment.view.RegisterView;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 

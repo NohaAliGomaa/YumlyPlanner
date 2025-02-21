@@ -46,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.homeFragment);
                     return true;
                 } else if (itemId == R.id.searchFragment) {
-                    navController.navigate(R.id.action_homeFragment_to_searchFragment);
+                    navController.navigate(R.id.searchFragment);
                     return true;
                 } else if (itemId == R.id.favouritFragment) {
-                    navController.navigate(R.id.action_homeFragment_to_favouritFragment);
+                    navController.navigate(R.id.favouritFragment);
                     return true;
                 } else if (itemId == R.id.profileFragment) {
-                    navController.navigate(R.id.action_homeFragment_to_profileFragment);
+                    navController.navigate(R.id.profileFragment);
                     return true;
                 }
                 return false;

@@ -8,7 +8,7 @@
     >
 
     <Button
-        android:id="@+id/skipBtn"
+        android:id="@+id/backBtn"
         style="?attr/materialIconButtonStyle"
         android:layout_width="58dp"
         android:layout_height="56dp"
@@ -16,7 +16,6 @@
         android:layout_marginTop="12dp"
         android:backgroundTint="@color/toneColor"
         android:contentDescription="@string/skip"
-
         app:icon="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,6 +29,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/searchhint"
+        app:hintTextColor="@color/primeryColor"
+        app:boxStrokeColor="@color/primeryColor"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -40,6 +41,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_Search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -123,7 +125,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="60dp"
         android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

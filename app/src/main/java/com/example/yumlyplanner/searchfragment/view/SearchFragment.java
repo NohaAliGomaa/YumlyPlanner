@@ -1,66 +1,195 @@
 package com.example.yumlyplanner.searchfragment.view;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumlyplanner.R;
+import com.example.yumlyplanner.model.pojo.Area;
+import com.example.yumlyplanner.model.pojo.Category;
+import com.example.yumlyplanner.model.pojo.Ingredient;
+import com.example.yumlyplanner.model.pojo.Meal;
+import com.example.yumlyplanner.model.response.AllArea;
+import com.example.yumlyplanner.searchfragment.presenter.SearchPresenterImpl;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+import com.jakewharton.rxbinding4.widget.RxTextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SearchFragment extends Fragment {
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class SearchFragment extends Fragment implements SearchView, OnSearchRecycleClick {
+    private SearchPresenterImpl presenter;
+    private TextInputEditText search;
+    private Button back;
+    private Chip categoryChip, ingredientChip, countryChip;
+    private ChipGroup chipGroup;
+    private RecyclerView recyclerView;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter = new SearchPresenterImpl(this, this);
+
+        recyclerView = view.findViewById(R.id.home_RV);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setHasFixedSize(false);
+
+        search = view.findViewById(R.id.et_Search);
+        back = view.findViewById(R.id.backBtn);
+        chipGroup = view.findViewById(R.id.chip_group);
+        categoryChip = view.findViewById(R.id.category_chip);
+        ingredientChip = view.findViewById(R.id.ingredient_chip);
+        countryChip = view.findViewById(R.id.country_chip);
+
+        chipGroup.setOnCheckedChangeListener((chipGroup, id) -> {
+            if (id != -1) { // Ensure a chip is selected
+                Chip chip = view.findViewById(id);
+                if (chip != null) {
+                    for (int i = 0; i < chipGroup.getChildCount(); ++i) {
+                        chipGroup.getChildAt(i).setClickable(true);
+                    }
+                    chip.setClickable(false);
+                }
+            }
+        });
+
+        countryChip.setOnClickListener(v -> {
+            List<Area> areas = AllArea.getInstance().getAllArea();
+            SearchAdapter<Area> adapter = new SearchAdapter<>(areas, this);
+            recyclerView.setAdapter(adapter);
+        });
+
+        ingredientChip.setOnClickListener(v -> presenter.getIngredient());
+        categoryChip.setOnClickListener(v -> presenter.getAllCategories());
+
+       setWatcherForSearch(search);
+
+        back.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_homeFragment));
+    }
+
+    private void setWatcherForSearch(EditText search) {
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) { // Prevent crash when empty
+                    presenter.getMealListWithLetter(s.charAt(0));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
+
+    @Override
+    public void showIngredient(List<Ingredient> ingredients) {
+        SearchAdapter<Ingredient> adapter = new SearchAdapter<>(ingredients, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showCategory(List<Category> categories) {
+        SearchAdapter<Category> adapter = new SearchAdapter<>(categories, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void sendMealCountryToDisplay(List<Meal> meals) {
+        SearchAdapter<Meal> adapter = new SearchAdapter<>(meals, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void sendMealIngredientsToDisplay(List<Meal> meals) {
+        SearchAdapter<Meal> adapter = new SearchAdapter<>(meals, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void sendMealCategoryToDisplay(List<Meal> meals) {
+        SearchAdapter<Meal> adapter = new SearchAdapter<>(meals, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void displayMealListWithLetter(List<Meal> meals) {
+        SearchAdapter<Meal> adapter = new SearchAdapter<>(meals, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void categoryName(String category) {
+        presenter.getMealbyCategory(category);
+    }
+
+    @Override
+    public void IngrsdientName(String ingredient) {
+        presenter.getMealbycIngredient(ingredient);
+    }
+
+
+    @Override
+    public void countryName(String country) {
+        presenter.getMealbyCountry(country);
+    }
+
+    @Override
+    public void letterChar(char letter) {
+        presenter.getMealListWithLetter(letter);
+    }
+
+    @Override
+    public void navigateMeal() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_mealFragment);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.clear(); // Cancel pending API calls to prevent crashes
+        compositeDisposable.clear(); // Dispose RxJava subscriptions
+        presenter = null;
     }
 }

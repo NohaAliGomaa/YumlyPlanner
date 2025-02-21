@@ -1,5 +1,7 @@
 package com.example.yumlyplanner.model;
 
+import com.example.yumlyplanner.model.network.LoginCallBack;
+import com.example.yumlyplanner.model.network.RegisterCallBack;
 import com.google.firebase.auth.AuthCredential;
 
 public interface AuthenticationModel {

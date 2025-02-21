@@ -1,4 +1,4 @@
-package com.example.yumlyplanner.model;
+package com.example.yumlyplanner.model.network;
 
 import com.example.yumlyplanner.model.pojo.Meal;
 

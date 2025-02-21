@@ -1,23 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:fillViewport="true"
+    android:scrollbarStyle="outsideInset">
 
-    <TextView
-        android:id="@+id/tv_greeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Meal"
-        android:textColor="@color/primeryColor"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:nestedScrollingEnabled="false">
 
+        <ImageView
+            android:id="@+id/mealPhotoView"
+            android:layout_width="414dp"
+            android:layout_height="246dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/placeholder_image" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/addToFavouritBtn"
+            android:layout_width="62dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mealPhotoView"
+            app:srcCompat="@drawable/love" />
+
+        <ImageView
+            android:id="@+id/backToHome"
+            android:layout_width="68dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/mealPhotoView"
+            app:layout_constraintTop_toTopOf="@+id/mealPhotoView"
+            app:srcCompat="@drawable/cancel" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="389dp"
+            android:layout_height="526dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/rounded_top_corners"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="124dp"
+                android:layout_height="11dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/primeryColor"
+                android:backgroundTint="@color/primeryColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/rectangle_73" />
+
+            <TextView
+                android:id="@+id/mealTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="70dp"
+                android:text="@string/title"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="@color/primeryColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mealCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/Category"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@color/primeryColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/mealTitle"
+                app:layout_constraintTop_toBottomOf="@+id/mealTitle" />
+
+            <TextView
+                android:id="@+id/mealArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/cuntry"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@color/primeryColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/mealCategory"
+                app:layout_constraintTop_toBottomOf="@+id/mealTitle" />
+
+            <TextView
+                android:id="@+id/Ingredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/ingredant"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="@color/primeryColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mealCategory" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ingredientRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/Ingredients"
+                app:layout_constraintTop_toBottomOf="@+id/Ingredients" />
+
+            <TextView
+                android:id="@+id/mealInstruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/instruction"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@color/primeryColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientRV" />
+
+            <WebView
+                android:id="@+id/mealVideo"
+                android:layout_width="match_parent"
+                android:layout_height="163dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mealInstruction" />
+
+            <Button
+                android:id="@+id/addToCalenderBtn"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/primeryColor"
+                android:text="@string/add"
+                android:textColor="@color/toneColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mealVideo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
