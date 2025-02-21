@@ -10,17 +10,17 @@ public interface MealsRemoteDataSource {
     @GET("random.php")
     Single<MealResponse> getRandomMeal();
 
-//    @GET("filter.php")
-//    Single<MealResponse> getFilteredMealsCountries(@Query("a") String country);
-//
-//    @GET("filter.php")
-//    Single<MealResponse> getFilteredMealsCategories(@Query("c") String category);
-//
-//    @GET("filter.php")
-//    Single<MealResponse> getFilteredMealsIngredients(@Query("i") String ingredient);
-//
-//    @GET("lookup.php")
-//    Single<MealResponse> getDetailedMeal(@Query("i") String detailedMeal);
+    @GET("filter.php")
+    Single<MealResponse> getFilteredMealsCountries(@Query("a") String country);
+
+    @GET("filter.php")
+    Single<MealResponse> getFilteredMealsCategories(@Query("c") String category);
+
+    @GET("filter.php")
+    Single<MealResponse> getFilteredMealsIngredients(@Query("i") String ingredient);
+
+    @GET("lookup.php")
+    Single<MealResponse> getDetailedMeal(@Query("i") String detailedMeal);
 
     @GET("list.php?i=list")
     Single<IngredientResponse> getIngredient();

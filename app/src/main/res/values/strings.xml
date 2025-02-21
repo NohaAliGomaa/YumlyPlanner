@@ -29,4 +29,6 @@
     <string name="ingredant">Ingredant</string>
     <string name="ingredient">Ingredient</string>
     <string name="country">Country</string>
+    <string name="searchhint">Search</string>
+    <string name="content_description_start_icon">content description</string>
 </resources>
