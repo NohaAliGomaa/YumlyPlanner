@@ -13,7 +13,5 @@ public interface HomeView {
     public void sendMealCountryToDisplay(List<Meal> meals);
     public void sendMealIngredientsToDisplay(List<Meal> meals);
     public void sendMealCategoryToDisplay(List<Meal> meals);
-
-
     void showError(String message);
 }

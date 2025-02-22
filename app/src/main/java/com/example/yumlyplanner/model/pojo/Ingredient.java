@@ -17,6 +17,10 @@ public class Ingredient implements BindableItem {
         this.thumbIngredient = thumbIngredient;
     }
 
+    public Ingredient(String strIngredient) {
+        this.strIngredient = strIngredient;
+    }
+
     // Constructor
     public Ingredient(String idIngredient, String strIngredient, String strDescription, String strType) {
         this.idIngredient = idIngredient;

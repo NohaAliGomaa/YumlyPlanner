@@ -12,5 +12,5 @@ public interface OnHomeRecycleClick {
 public  void categoryName(String category);
 public  void  IngrsdientName(String ingredient);
 public void  countryName(String country);
-public void  navigateMeal();
+public void  navigateMeal(String id);
 }

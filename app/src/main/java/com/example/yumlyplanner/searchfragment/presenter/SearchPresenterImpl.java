@@ -1,6 +1,7 @@
 package com.example.yumlyplanner.searchfragment.presenter;
 
 import com.example.yumlyplanner.model.MealRepositry;
+import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.searchfragment.view.OnSearchRecycleClick;
 import com.example.yumlyplanner.searchfragment.view.SearchView;
 
@@ -14,10 +15,10 @@ public class SearchPresenterImpl implements SearchPresenter {
     private final OnSearchRecycleClick onSearchRecycleClick;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public SearchPresenterImpl(SearchView view, OnSearchRecycleClick onSearchRecycleClick) {
+    public SearchPresenterImpl(SearchView view, OnSearchRecycleClick onSearchRecycleClick , MealLocalDataSource mealLocalDataSource) {
         this.view = view;
         this.onSearchRecycleClick = onSearchRecycleClick;
-        this.repository = MealRepositry.getInstance();
+        this.repository = MealRepositry.getInstance(mealLocalDataSource);
     }
 
     @Override

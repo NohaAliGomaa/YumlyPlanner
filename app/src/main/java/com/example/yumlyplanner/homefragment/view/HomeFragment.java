@@ -21,11 +21,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.yumlyplanner.R;
 import com.example.yumlyplanner.homefragment.presenter.HomePresenterImpl;
+import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.model.response.AllArea;
 import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Category;
 import com.example.yumlyplanner.model.pojo.Ingredient;
 import com.example.yumlyplanner.model.pojo.Meal;
+import com.example.yumlyplanner.singlemeal.view.MealFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -60,7 +62,7 @@ public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter=new HomePresenterImpl(this,this);
+        presenter=new HomePresenterImpl(this,this, MealLocalDataSource.getInstance(getContext()));
         recyclerView=view.findViewById(R.id.home_RV);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setHasFixedSize(false);
@@ -177,8 +179,10 @@ public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClic
     }
 
     @Override
-    public void navigateMeal() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_mealFragment);
+    public void navigateMeal(String id) {
+       HomeFragmentDirections.ActionHomeFragmentToMealFragment action=
+                HomeFragmentDirections.actionHomeFragmentToMealFragment(id);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 
     @Override

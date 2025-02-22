@@ -16,6 +16,7 @@ import com.example.yumlyplanner.R;
 import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Category;
 import com.example.yumlyplanner.model.pojo.Ingredient;
+import com.example.yumlyplanner.model.pojo.Meal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +90,8 @@ public class HomeAdapter<T extends BindableItem> extends RecyclerView.Adapter<Ho
                 else if(item instanceof Category) {
                     cardView.setOnClickListener(v -> onHomeRecycleClick.categoryName(item.getTitle()));
                 }
-                else {
-                    cardView.setOnClickListener(v->onHomeRecycleClick.navigateMeal());
+                else if(item instanceof Meal){
+                    cardView.setOnClickListener(v->onHomeRecycleClick.navigateMeal(((Meal) item).getIdMeal()));
                 }
             }
 

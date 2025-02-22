@@ -36,4 +36,11 @@
     <string name="meal_of_the_day">Meal of the Day</string>
     <string name="cuntry">Country</string>
     <string name="add">Add To Calendar</string>
+    <string name="todoc">TODO</string>
+    <string name="todon">TODO</string>
+    <string name="w">TODO</string>
+    <string name="a">TODO</string>
+    <string name="e">TODO</string>
+    <string name="re">TODO</string>
+    <string name="q">TODO</string>
 </resources>

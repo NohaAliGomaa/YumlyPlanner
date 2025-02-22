@@ -1,5 +1,7 @@
 package com.example.yumlyplanner.model.remot;
 
+import android.util.Log;
+
 import com.example.yumlyplanner.model.response.CategoryResponse;
 import com.example.yumlyplanner.model.response.IngredientResponse;
 import com.example.yumlyplanner.model.response.MealResponse;
@@ -28,6 +30,7 @@ public class MealsRemotDataSourceImpl {
     private  static MealsRemotDataSourceImpl remotDataSource = null;
     MealsRemoteDataSource  mealsRemoteDataSource;
     List<Meal> meals;
+    private static final String TAG = "MealsRemotDataSourceImp";
 
     private MealsRemotDataSourceImpl() {
         getClient();
@@ -109,6 +112,7 @@ public class MealsRemotDataSourceImpl {
     }
      public Single<MealResponse> getDetailedMeal( String mealId)
      {
+         Log.i(TAG, "getDetailedMeal: "+mealId);
          return  mealsRemoteDataSource.getDetailedMeal(mealId);
      }
      public Single<MealResponse> getMealListWithLetter( char letter)

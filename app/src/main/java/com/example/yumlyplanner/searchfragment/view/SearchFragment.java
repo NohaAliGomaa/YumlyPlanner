@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumlyplanner.R;
+import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Category;
 import com.example.yumlyplanner.model.pojo.Ingredient;
@@ -62,7 +63,7 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new SearchPresenterImpl(this, this);
+        presenter = new SearchPresenterImpl(this, this , MealLocalDataSource.getInstance(getContext()) );
 
         recyclerView = view.findViewById(R.id.home_RV);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import com.example.yumlyplanner.homefragment.view.HomeView;
 import com.example.yumlyplanner.homefragment.view.OnHomeRecycleClick;
 import com.example.yumlyplanner.model.MealRepositry;
+import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.model.network.NetworkCallBack;
 import com.example.yumlyplanner.model.pojo.Meal;
 import java.lang.ref.WeakReference;
@@ -21,10 +22,10 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private static final String TAG = "HomePresenterImpl";
 
-    public HomePresenterImpl(HomeView view, OnHomeRecycleClick onHomeRecycleClick) {
+    public HomePresenterImpl(HomeView view, OnHomeRecycleClick onHomeRecycleClick, MealLocalDataSource mealLocalDataSource) {
         this.view = view;
         this.onHomeRecycleClick = onHomeRecycleClick;
-        this.repository = MealRepositry.getInstance();
+        this.repository = MealRepositry.getInstance(mealLocalDataSource);
     }
 
     @Override
