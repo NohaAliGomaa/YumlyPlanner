@@ -75,22 +75,27 @@ public class MealRepositry {
     {
         return localDataSource.getAllPlanedMeal();
     }
-    public void insert(Meal  meal) {
+    public Completable insert(Meal  meal) {
 
-        localDataSource.insert(meal);
-
-    }
-
-    public void delete(Meal meal) {
-
-        localDataSource.delete(meal);
+       return localDataSource.insert(meal);
 
     }
-    public Meal getMealById(String mealId)
+
+    public Completable delete(Meal meal) {
+
+      return   localDataSource.delete(meal);
+
+    }
+    public  Completable deletMealFromFavourit(String idMeal)
+    {
+        Log.i(TAG, "deletMealFromFavourit: "+idMeal);
+        return  localDataSource.deletMealFromFavourit(idMeal);
+    }
+    public Flowable<Meal> getMealById(String mealId)
     {
         return  localDataSource.getMealById(mealId);
     }
-    public Completable updateMealDate(int idMeal, String newDate)
+    public Completable updateMealDate(String idMeal, String newDate)
     {
         return  localDataSource.updateMealDate(idMeal,newDate);
     }

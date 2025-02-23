@@ -1,9 +1,12 @@
 package com.example.yumlyplanner.singlemeal.view;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +33,8 @@ import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Meal;
 import com.example.yumlyplanner.singlemeal.presenter.SingleMealPresenterImpl;
 
+import java.time.Year;
+
 public class MealFragment extends Fragment implements SingleMealView{
     private ImageView mealPhotoView, addToFavouritBtn, backToHome;
     private TextView mealTitle, mealCategory, mealArea, Ingredients, mealInstruction;
@@ -36,7 +42,9 @@ public class MealFragment extends Fragment implements SingleMealView{
     private RecyclerView ingredientRV;
     private Button addToCalenderBtn;
      private Meal theMeal;
+     private String pickedDate;
      private SingleMealPresenterImpl presenter;
+
     private static final String TAG = "MealFragment";
 
     public MealFragment() {
@@ -78,18 +86,62 @@ public class MealFragment extends Fragment implements SingleMealView{
         mealId=args.getMealId();
         backToHome.setOnClickListener(v ->
                 Navigation.findNavController(requireView()).navigate(R.id.action_mealFragment_to_homeFragment));
-
         addToFavouritBtn.setOnClickListener(v -> {
+            if (theMeal == null) return;
 
-            presenter.addtoFavourit(theMeal);
+            if (!theMeal.isFavourit()) {
+                theMeal.setFavourit(true);
+                presenter.addtoFavourit(theMeal);
+            } else {
+                Log.d(TAG, "Deleting meal: " + theMeal.getMealId());
+                presenter.deletMealFromFavourit(theMeal.getIdMeal());
+                theMeal.setFavourit(false);
+            }
+            updateFavouriteButton();
         });
 
         addToCalenderBtn.setOnClickListener(v -> {
-//           presenter.updateMealDate(mealId,);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), R.style.DialogTheme,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            pickedDate = year + "." + (month + 1) + "." + dayOfMonth;
+                            if (pickedDate == null) return;
+
+                            if (pickedDate != null && !theMeal.isFavourit()) {
+                                theMeal.setDate(pickedDate);
+                                presenter.addtoFavourit(theMeal);
+                            } else {
+                                presenter.updateMealDate(theMeal.getIdMeal(), pickedDate);
+                            }// Month is 0-based
+                        }
+                    }, 2025, 1, 20);
+
+            datePickerDialog.show();
+            datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
+            datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
+
+
+
         });
         presenter.getDetailedMeal(mealId);
     }
 
+
+    private void updateFavouriteButton() {
+        if (theMeal != null) {
+            Log.d(TAG, "Meal Favourite Status: " + theMeal.isFavourit());
+
+            if (theMeal.isFavourit()) {
+                addToFavouritBtn.setImageResource(R.drawable.heart);
+            } else {
+                addToFavouritBtn.setImageResource(R.drawable.love);
+            }
+
+            // Force the ImageView to refresh
+            addToFavouritBtn.invalidate();
+        }
+    }
     @Override
     public void displayMealInScreen(Meal meal) {
         Toast.makeText(requireContext(), "the meal hase been retrive"+meal.getStrMeal(), Toast.LENGTH_SHORT).show();
@@ -109,6 +161,7 @@ public class MealFragment extends Fragment implements SingleMealView{
         if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
             loadYoutubeVideo(meal.getStrYoutube());
         }
+        updateFavouriteButton();
 
     }
     private void loadYoutubeVideo(String videoUrl) {
@@ -150,5 +203,11 @@ public class MealFragment extends Fragment implements SingleMealView{
     public void onDestroyView() {
         super.onDestroyView();
         presenter = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 }

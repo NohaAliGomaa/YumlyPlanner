@@ -3,15 +3,10 @@ package com.example.yumlyplanner.model.pojo;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 import com.example.yumlyplanner.homefragment.view.BindableItem;
-import com.example.yumlyplanner.model.local.Converters;
-import com.example.yumlyplanner.model.local.IngredientConverter;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 @Entity(tableName = "meals")
 public class Meal  implements BindableItem {
@@ -170,8 +165,8 @@ public class Meal  implements BindableItem {
 
     @ColumnInfo(name = "MealMeasure20")
     public String strMeasure20;
-    @ColumnInfo(name = "Favourite")
-    public boolean isFavourit = false;
+    @ColumnInfo(name = "isFavourit")
+    public boolean isFavourit ;
 
     public Meal() {
     }

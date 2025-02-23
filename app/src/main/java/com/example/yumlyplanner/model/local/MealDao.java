@@ -15,19 +15,25 @@ import io.reactivex.rxjava3.core.Flowable;
 
 @Dao
 public interface MealDao {
+        @Query("SELECT * FROM meals WHERE isFavourit = 1")
+        Flowable<List<Meal>> getAllFavouritMeal();
 
-    @Query("SELECT * From meals WHERE  Favourite = true")
-    Flowable<List<Meal>> getAllFavouritMeal();
-    @Query("SELECT * From meals WHERE  date != Null")
-    Flowable<List<Meal>> getAllPlanedMeal();
+        @Query("SELECT * FROM meals WHERE date IS NOT NULL")
+        Flowable<List<Meal>> getAllPlanedMeal();
 
-    @Query("SELECT * FROM meals WHERE id_meal = :idMeal ")
-    Meal getMealById(String idMeal);
-    @Query("UPDATE meals SET date = :newDate WHERE id_meal = :idMeal")
-    Completable updateMealDate(int idMeal, String newDate);
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAll(Meal meal);
-    @Delete
-    void delete(Meal meal);
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        Completable insertAll(Meal meal);
 
+
+        @Delete
+        Completable deleteMealById(Meal meal);
+
+        @Query("UPDATE meals SET isFavourit = 0 WHERE id_meal = :idMeal")
+        Completable updateMealFavouriteStatus(String idMeal);
+
+        @Query("SELECT * FROM meals WHERE mealId = :mealId")
+        Flowable<Meal> getMealById(String mealId);
+
+        @Query("UPDATE meals SET date = :newDate WHERE mealId = :idMeal")
+        Completable updateMealDate(String idMeal, String newDate);
 }

@@ -43,24 +43,18 @@ public class HomeAdapter<T extends BindableItem> extends RecyclerView.Adapter<Ho
 
         holder.bind(items.get(position));
     }
-
     @Override
     public int getItemCount() {
         return items.size();
     }
-
-
     public void setItems(List<T> newItems) {
         this.items = newItems;
         notifyDataSetChanged();
     }
-
-
     class HomeViewHolder extends RecyclerView.ViewHolder {
         private final TextView itemTitle;
         private final ImageView itemImage;
         private  final CardView cardView;
-
         @SuppressLint("WrongViewCast")
         public HomeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,7 +62,6 @@ public class HomeAdapter<T extends BindableItem> extends RecyclerView.Adapter<Ho
             itemImage = itemView.findViewById(R.id.mealPhotoView);
             cardView=itemView.findViewById(R.id.itemCard);
         }
-
         // Bind the data directly using T
         void bind(T item) {
 

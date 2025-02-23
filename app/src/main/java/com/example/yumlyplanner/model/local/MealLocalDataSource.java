@@ -1,6 +1,9 @@
 package com.example.yumlyplanner.model.local;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.room.Query;
 
 import com.example.yumlyplanner.model.pojo.Meal;
 
@@ -12,7 +15,7 @@ import io.reactivex.rxjava3.core.Flowable;
 public class MealLocalDataSource {
     private MealDao dao;
     private Flowable<List<Meal>> data;
-
+    private static final String TAG = "MealLocalDataSource";
     private static MealLocalDataSource mealLocalDataSource = null;
     private MealLocalDataSource(Context context) {
 
@@ -37,22 +40,25 @@ public class MealLocalDataSource {
     {
         return dao.getAllPlanedMeal();
     }
-    public void insert(Meal meal) {
-        new Thread(() -> {
-            dao.insertAll(meal);
-        }).start();
+    public Completable insert(Meal meal) {
+         return    dao.insertAll(meal);
+
     }
 
-    public void delete(Meal meal) {
-        new Thread(() -> {
-            dao.delete(meal);
-        }).start();
+    public Completable delete(Meal meal) {
+
+         return   dao.deleteMealById(meal);
     }
-    public Meal getMealById(String mealId)
+
+    public  Completable deletMealFromFavourit(String idMeal)
+    {  Log.i(TAG, " in LocalDataSourcedeletMealFromFavourit: "+idMeal);
+        return  dao.updateMealFavouriteStatus(idMeal);
+    }
+    public Flowable<Meal> getMealById(String mealId)
     {
         return  dao.getMealById(mealId);
     }
-    public Completable updateMealDate(int idMeal, String newDate)
+    public Completable updateMealDate(String idMeal, String newDate)
     {
         return  dao.updateMealDate(idMeal,newDate);
     }

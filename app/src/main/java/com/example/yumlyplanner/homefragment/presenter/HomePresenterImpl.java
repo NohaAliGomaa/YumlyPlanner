@@ -27,7 +27,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
         this.onHomeRecycleClick = onHomeRecycleClick;
         this.repository = MealRepositry.getInstance(mealLocalDataSource);
     }
-
     @Override
     public void getRandomMeal() {
         Disposable disposable = repository.getRandomMeal()
@@ -47,9 +46,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
                 );
         compositeDisposable.add(disposable);
     }
-
-
-
     @Override
     public void getIngredient() {
         compositeDisposable.add(repository.getIngredient()
@@ -66,7 +62,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
                         throwable -> handleError(throwable)
                 ));
     }
-
     @Override
     public void getAllCategories() {
         compositeDisposable.add(repository.getAllCategories()
@@ -82,7 +77,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
                         throwable -> handleError(throwable)
                 ));
     }
-
     @Override
     public void getMealbyCategory(String categoryName) {
         compositeDisposable.add(repository.getFilteredMealsCategories(categoryName)
@@ -99,7 +93,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
                         throwable -> handleError(throwable)
                 ));
     }
-
     @Override
     public void getMealbycIngredient(String ingredientName) {
         compositeDisposable.add(repository.getFilteredMealsIngredients(ingredientName)
@@ -116,7 +109,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
                         throwable -> handleError(throwable)
                 ));
     }
-
     @Override
     public void getMealbyCountry(String countryName) {
         compositeDisposable.add(repository.getFilteredMealsCountries(countryName)
@@ -133,7 +125,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
                         throwable -> handleError(throwable)
                 ));
     }
-
     @Override
     public void onSuccessResult(List<Meal> meals) {
 
@@ -143,7 +134,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
             Log.e(TAG, "onSuccessResult: Received an empty meal list");
         }
     }
-
     @Override
     public void onFailurResult(String erroMsg) {
         Log.i(TAG, "onFailurResult: "+erroMsg);

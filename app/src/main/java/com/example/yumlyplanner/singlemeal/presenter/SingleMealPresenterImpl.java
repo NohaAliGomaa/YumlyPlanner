@@ -27,11 +27,17 @@ public class SingleMealPresenterImpl  implements SingleMealPresenter{
 
     @Override
     public void addtoFavourit(Meal meal) {
-        repositry.insert(meal);
+        repositry.insert(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> view.onSuccess("the Meal is Set to be Favourit"),
+                        throwable -> handleError(throwable)
+                );
     }
 
     @Override
-    public void updateMealDate(int idMeal, String newDate) {
+    public void updateMealDate(String idMeal, String newDate) {
         repositry.updateMealDate(idMeal,newDate).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -55,11 +61,31 @@ public class SingleMealPresenterImpl  implements SingleMealPresenter{
 
 
     }
+    public  void deletMealFromFavourit(String idMeal)
+    {
+        repositry.deletMealFromFavourit(idMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> view.onSuccess("Meal removed from favorites"+idMeal),
+                        throwable -> handleError(throwable)
+                );
+    }
     private void handleError(Throwable throwable) {
 
         if (view != null) {
             view.showError("Something went wrong. Please try again.");
         }
+    }
+    public void delete(Meal meal)
+    {  Log.d(TAG, "Attempting to delete meal with ID: " + meal.getMealId());
+        repositry.delete(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> view.onSuccess("Meal deleted successfully"),
+                        throwable -> handleError(throwable)
+                );
     }
 
 }
