@@ -5,5 +5,5 @@ public interface OnSearchRecycleClick {
     public  void  IngrsdientName(String ingredient);
     public void  countryName(String country);
     public  void letterChar(char letter);
-    public void  navigateMeal();
+    public void  navigateMeal(String id);
 }

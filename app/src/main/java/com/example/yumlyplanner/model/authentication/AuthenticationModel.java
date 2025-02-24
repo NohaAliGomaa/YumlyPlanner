@@ -10,4 +10,5 @@ public interface AuthenticationModel {
     public void authenticateWithFirebase(String idToken, RegisterCallBack callback);
     public void registerUser(String email, String password, RegisterCallBack listener);
     public void signInWithGoogle(AuthCredential credential, RegisterCallBack listener);
+    public  void logout();
 }

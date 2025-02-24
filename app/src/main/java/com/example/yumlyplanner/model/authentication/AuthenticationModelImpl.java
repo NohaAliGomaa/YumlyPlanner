@@ -51,12 +51,18 @@ public class AuthenticationModelImpl implements AuthenticationModel {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                       callback.showOnRegisterSuccess("Registration successful!");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                            callback.showOnRegisterSuccess("Registration successful!");
+                        } else {
+                            callback.showOnRegisterError("User already exists. Please log in instead.");
+                        }
                     } else {
                         callback.showOnRegisterError("Registration failed: " + task.getException().getMessage());
                     }
                 });
     }
+
 
     @Override
     public void registerUser(String email, String password, RegisterCallBack listener) {
@@ -81,5 +87,9 @@ public class AuthenticationModelImpl implements AuthenticationModel {
                     }
                 });
 
+    }
+    @Override
+    public void logout() {
+        mAuth.signOut();
     }
 }

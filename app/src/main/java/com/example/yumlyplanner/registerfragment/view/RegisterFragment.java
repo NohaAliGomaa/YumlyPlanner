@@ -101,9 +101,12 @@ public class RegisterFragment extends Fragment implements  RegisterView{
         signInButton.setOnClickListener(v->signUpWithGoogle());
     }
     public void signUpWithGoogle() {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 9002);
+        googleSignInClient.signOut().addOnCompleteListener(task -> {
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        });
     }
+
 
     @Override
     public void showError(String message) {
@@ -115,7 +118,6 @@ public class RegisterFragment extends Fragment implements  RegisterView{
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -126,12 +128,12 @@ public class RegisterFragment extends Fragment implements  RegisterView{
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 presenter.signInWithGoogle(credential);
-                new Handler(Looper.getMainLooper()).post(() -> navigateToHome());
             } catch (ApiException e) {
-                showError("Google sign-in failed");
+                showError("Google sign-in failed: " + e.getMessage());
             }
         }
     }
+
     @Override
     public void navigateToHome() {
         Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_homeFragment);

@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumlyplanner.R;
+import com.example.yumlyplanner.homefragment.view.HomeFragmentDirections;
 import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Category;
@@ -63,7 +65,7 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new SearchPresenterImpl(this, this , MealLocalDataSource.getInstance(getContext()) );
+        presenter = new SearchPresenterImpl(this, this, MealLocalDataSource.getInstance(getContext()));
 
         recyclerView = view.findViewById(R.id.home_RV);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -96,16 +98,15 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
 
         ingredientChip.setOnClickListener(v -> presenter.getIngredient());
         categoryChip.setOnClickListener(v -> presenter.getAllCategories());
-
-       setWatcherForSearch(search);
-
+        setWatcherForSearch(search);
         back.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_homeFragment));
     }
 
     private void setWatcherForSearch(EditText search) {
         search.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -115,7 +116,8 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -182,8 +184,11 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
     }
 
     @Override
-    public void navigateMeal() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_mealFragment);
+    public void navigateMeal(String id) {
+        SearchFragmentDirections.ActionSearchFragmentToMealFragment action =
+                SearchFragmentDirections.actionSearchFragmentToMealFragment(id);
+        Navigation.findNavController(requireView()).navigate(action);
+
     }
 
     @Override

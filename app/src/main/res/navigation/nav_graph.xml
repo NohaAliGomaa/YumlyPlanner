@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/favouritFragment"
-        android:name="com.example.yumlyplanner.favouritfragment.FavouritFragment"
+        android:name="com.example.yumlyplanner.favouritfragment.view.FavouritFragment"
         android:label="fragment_favourit"
         tools:layout="@layout/fragment_favourit" >
         <action

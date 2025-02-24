@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -35,6 +36,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClick{
     private static final String TAG = "HomeFragment";
+    private CardView randomMeal;
     private HomePresenterImpl presenter;
     TextView mealTitle,instruction;
     ImageView mealPhoto;
@@ -74,6 +76,7 @@ public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClic
         ingredientChip = view.findViewById(R.id.ingredient_chip);
         countryChip = view.findViewById(R.id.country_chip);
         instruction=view.findViewById(R.id.mealInstruction);
+        randomMeal=view.findViewById(R.id.itemCard);
         chipGroup.setOnCheckedChangeListener((chipGroup, id) -> {
             Chip chip = ((Chip) chipGroup.getChildAt(chipGroup.getCheckedChipId()));
             if (chip != null) {
@@ -105,6 +108,7 @@ public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClic
             Glide.with(requireContext()).load(meal.getStrMealThumb()).into(mealPhoto);
             mealTitle.setText(meal.getStrMeal());
             instruction.setText(meal.getStrInstructions());
+            randomMeal.setOnClickListener(v->navigateMeal(meal.getIdMeal()));
             Log.i(TAG, "showRandomMeal: " + meal.getStrMeal() + " is here");
         } else {
             Log.e(TAG, "showRandomMeal: Meal is null");

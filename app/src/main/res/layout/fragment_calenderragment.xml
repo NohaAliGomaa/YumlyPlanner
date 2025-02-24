@@ -10,12 +10,13 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="410dp"
-        android:layout_height="331dp"
+        android:layout_width="406dp"
+        android:layout_height="297dp"
+        android:background="@drawable/custom_selector"
         android:dateTextAppearance="@style/TextAppearance.AppCompat.Large"
         android:firstDayOfWeek="2"
-        android:background="@drawable/custom_selector"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,16 +36,17 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendar_RV"
-        android:layout_width="365dp"
-        android:layout_height="290dp"
+        android:layout_width="424dp"
+        android:layout_height="357dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mealoftheweek"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

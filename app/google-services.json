@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "230636474613-feqqupdg1k0d27f7fpr36dqpob2636ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yumlyplanner",
+            "certificate_hash": "1071b180c9d573948064d5cfda668b0e908a37b6"
+          }
+        },
+        {
           "client_id": "230636474613-erhri1njdv3460iksib5a5j86afso5jq.apps.googleusercontent.com",
           "client_type": 3
         }
