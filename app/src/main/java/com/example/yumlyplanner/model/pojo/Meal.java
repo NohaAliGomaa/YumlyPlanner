@@ -8,6 +8,9 @@ import com.example.yumlyplanner.homefragment.view.BindableItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.annotations.Nullable;
+
 @Entity(tableName = "meals")
 public class Meal  implements BindableItem {
     @PrimaryKey(autoGenerate = true)
@@ -42,6 +45,7 @@ public class Meal  implements BindableItem {
 
     @ColumnInfo(name = "source")
     private String strSource;
+    @Nullable
     @ColumnInfo(name = "date")
     private String date;
     @ColumnInfo(name = "MealIngredient1")

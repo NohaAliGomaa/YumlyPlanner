@@ -58,6 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        fab.setOnClickListener(v -> navController.navigate(R.id.action_homeFragment_to_calenderragment));
+        fab.setOnClickListener(v -> navController.navigate(R.id.calenderFragment));
     }
     }

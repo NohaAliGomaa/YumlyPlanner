@@ -1,5 +1,6 @@
 package com.example.yumlyplanner.model.local;
 
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -17,6 +18,8 @@ import io.reactivex.rxjava3.core.Flowable;
 public interface MealDao {
         @Query("SELECT * FROM meals WHERE isFavourit = 1")
         Flowable<List<Meal>> getAllFavouritMeal();
+        @Query("SELECT * FROM meals WHERE date = :selectedDate")
+        Flowable<List<Meal>> getMealsByDate(String selectedDate);
 
         @Query("SELECT * FROM meals WHERE date IS NOT NULL")
         Flowable<List<Meal>> getAllPlanedMeal();
@@ -31,9 +34,9 @@ public interface MealDao {
         @Query("UPDATE meals SET isFavourit = 0 WHERE id_meal = :idMeal")
         Completable updateMealFavouriteStatus(String idMeal);
 
-        @Query("SELECT * FROM meals WHERE mealId = :mealId")
+        @Query("SELECT * FROM meals WHERE id_meal = :mealId")
         Flowable<Meal> getMealById(String mealId);
 
-        @Query("UPDATE meals SET date = :newDate WHERE mealId = :idMeal")
-        Completable updateMealDate(String idMeal, String newDate);
+        @Query("UPDATE meals SET date = :newDate WHERE id_meal = :idMeal")
+        Completable updateMealDate(String idMeal, @Nullable String newDate);
 }

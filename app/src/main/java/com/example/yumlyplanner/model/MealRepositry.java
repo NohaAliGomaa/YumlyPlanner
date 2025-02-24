@@ -99,4 +99,9 @@ public class MealRepositry {
     {
         return  localDataSource.updateMealDate(idMeal,newDate);
     }
+    public Flowable<List<Meal>> getMealsByDate(String selectedDate)
+    {
+        Log.i(TAG, "repo getMealsByDate: the date is"+selectedDate);
+        return localDataSource.getMealsByDate(selectedDate);
+    }
 }

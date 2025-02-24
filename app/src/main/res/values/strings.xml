@@ -43,4 +43,6 @@
     <string name="e">TODO</string>
     <string name="re">TODO</string>
     <string name="q">TODO</string>
+    <string name="date">Date</string>
+    <string name="MOW">Meal of this Week</string>
 </resources>

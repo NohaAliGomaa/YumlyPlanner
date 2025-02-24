@@ -1,7 +1,7 @@
 package com.example.yumlyplanner.loginfragment.presenter;
 
 import com.example.yumlyplanner.loginfragment.view.LoginView;
-import com.example.yumlyplanner.model.AuthenticationModelImpl;
+import com.example.yumlyplanner.model.authentication.AuthenticationModelImpl;
 import com.example.yumlyplanner.model.network.LoginCallBack;
 import com.google.firebase.auth.FirebaseUser;
 

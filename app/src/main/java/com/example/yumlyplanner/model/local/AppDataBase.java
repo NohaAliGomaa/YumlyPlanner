@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.yumlyplanner.model.pojo.Meal;
 
-@Database(entities = {Meal.class}, version = 1)
+@Database(entities = {Meal.class}, version = 2, exportSchema = false)
 public  abstract  class AppDataBase  extends RoomDatabase {
     private static AppDataBase instance = null;
 

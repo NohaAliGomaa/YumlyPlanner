@@ -1,4 +1,4 @@
-package com.example.yumlyplanner.model;
+package com.example.yumlyplanner.model.authentication;
 
 import com.example.yumlyplanner.model.network.LoginCallBack;
 import com.example.yumlyplanner.model.network.RegisterCallBack;

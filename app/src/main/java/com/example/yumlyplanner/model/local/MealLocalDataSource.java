@@ -62,4 +62,9 @@ public class MealLocalDataSource {
     {
         return  dao.updateMealDate(idMeal,newDate);
     }
+    public Flowable<List<Meal>> getMealsByDate(String selectedDate)
+    {  Log.i(TAG, "localDS getMealsByDate: the date is"+selectedDate);
+
+        return  dao.getMealsByDate(selectedDate);
+    }
 }

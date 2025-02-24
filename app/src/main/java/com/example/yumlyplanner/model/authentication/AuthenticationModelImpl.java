@@ -1,4 +1,4 @@
-package com.example.yumlyplanner.model;
+package com.example.yumlyplanner.model.authentication;
 
 import com.example.yumlyplanner.model.network.LoginCallBack;
 import com.example.yumlyplanner.model.network.RegisterCallBack;
@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class AuthenticationModelImpl implements AuthenticationModel{
+public class AuthenticationModelImpl implements AuthenticationModel {
     private final FirebaseAuth mAuth;
 
     public AuthenticationModelImpl() {
