@@ -1,5 +1,6 @@
 package com.example.yumlyplanner.favouritfragment.view;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -90,7 +91,15 @@ public class FavouritFragment extends Fragment implements FavoriteView, OnMealCl
 
     @Override
     public void onDeleteMeal(Meal meal) {
-        presenter.deletMealFromFavourit(meal.getIdMeal());
-        favoriteAdapter.notifyDataSetChanged();
+        new AlertDialog.Builder(this.getContext(), R.style.CustomAlertDialog)
+                .setTitle("Remove Favorite?")
+                .setMessage("Are you sure you want to remove this meal from favorites?")
+                .setPositiveButton("Yes", (dialogInterface, which) -> {
+                    presenter.deletMealFromFavourit(meal.getIdMeal());
+                    favoriteAdapter.notifyDataSetChanged();
+                    Toast.makeText(this.getContext(), "Meal removed from favorites", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }

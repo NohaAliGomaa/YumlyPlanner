@@ -88,6 +88,15 @@ public class MealFragment extends Fragment implements SingleMealView{
         String mealId;
         MealFragmentArgs args=MealFragmentArgs.fromBundle(getArguments());
         mealId=args.getMealId();
+//        if (SessionManager.getInstance(getContext()).isGuestMode()) {
+//            addToFavouritBtn.setEnabled(false);
+//            addToCalenderBtn.setEnabled(false);
+//            Log.i("UI", "Guest mode: Buttons disabled");
+//        } else {
+//            addToFavouritBtn.setEnabled(true);
+//            addToCalenderBtn.setEnabled(true);
+//            Log.i("UI", "Logged-in user: Buttons enabled");
+//        }
         backToHome.setOnClickListener(v ->
                 Navigation.findNavController(requireView()).navigate(R.id.action_mealFragment_to_homeFragment));
         addToFavouritBtn.setOnClickListener(v -> {
@@ -228,6 +237,8 @@ public class MealFragment extends Fragment implements SingleMealView{
                 .setMessage("Create an account or log in to save and plan meals.")
                 .setPositiveButton("Sign In", (dialogInterface, which) -> {
                     // Navigate to login/register fragment
+                    SessionManager.getInstance(this.getContext()).setGuestMode(false);
+                    Log.i(TAG, "Guest Mode ended.");
                     Navigation.findNavController(view).navigate(R.id.action_mealFragment_to_registerFragment);
                 })
                 .setNegativeButton("Cancel", null)

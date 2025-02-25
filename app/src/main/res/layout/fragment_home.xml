@@ -12,6 +12,7 @@
         android:background="@color/white"
         android:nestedScrollingEnabled="false">
 
+
         <TextView
             android:id="@+id/tv_greeting"
             android:layout_width="wrap_content"
@@ -208,6 +209,14 @@
             app:layout_constraintTop_toBottomOf="@+id/chip_group"
             app:layout_constraintVertical_bias="0.0" />
 
-
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/loading_animation"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="false"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

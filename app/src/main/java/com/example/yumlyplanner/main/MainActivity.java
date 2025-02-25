@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();
 
-        boolean isGuest = SessionManager.getInstance(MainActivity.this).isGuestMode();
+//        boolean isGuest = SessionManager.getInstance(MainActivity.this).isGuestMode();
 
 //        // Disable FAB if guest
 //        if (isGuest) {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         fab.setOnClickListener(v -> {
-            if (isGuest) {
+            if (SessionManager.getInstance(MainActivity.this).isGuestMode()) {
                 Toast.makeText(MainActivity.this, "Sign in to save and plan meals!", Toast.LENGTH_LONG).show();
             } else {
                 navController.navigate(R.id.calenderFragment);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.searchFragment);
                     return true;
                 } else if (itemId == R.id.favouritFragment) {
-                    if (isGuest) {
+                    if (SessionManager.getInstance(MainActivity.this).isGuestMode()) {
                         Toast.makeText(MainActivity.this, "Sign in to access favorites!", Toast.LENGTH_LONG).show();
                         return false; // Prevent navigation
                     } else {
@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Disable "Favorites" tab if user is a guest
-        if (isGuest) {
-            bottomNavigationView.getMenu().findItem(R.id.favouritFragment).setEnabled(false);
-        }
+//        // Disable "Favorites" tab if user is a guest
+//        if (SessionManager.getInstance(MainActivity.this).isGuestMode()) {
+//            bottomNavigationView.getMenu().findItem(R.id.favouritFragment).setEnabled(false);
+//        }
     }
 }

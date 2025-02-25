@@ -1,5 +1,6 @@
 package com.example.yumlyplanner.calendarfragmeng.view;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -94,8 +95,17 @@ public class Calenderragment extends Fragment implements com.example.yumlyplanne
 
     @Override
     public void onDeleteMeal(Meal meal) {
-        presenter.updateMealDate(meal.getIdMeal(), null);
-        calendarAdapter.notifyDataSetChanged();
+        new AlertDialog.Builder(this.getContext(), R.style.CustomAlertDialog)
+                .setTitle("Remove from Meal Plan?")
+                .setMessage("Are you sure you want to remove this meal from your meal plan?")
+                .setPositiveButton("Yes", (dialogInterface, which) -> {
+                    presenter.updateMealDate(meal.getIdMeal(), null);
+                    calendarAdapter.notifyDataSetChanged();
+                    Toast.makeText(this.getContext(), "Meal removed from your plan", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+
     }
 
     @Override

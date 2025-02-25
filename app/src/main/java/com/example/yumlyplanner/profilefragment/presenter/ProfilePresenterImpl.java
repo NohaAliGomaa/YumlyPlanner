@@ -46,5 +46,15 @@ public class ProfilePresenterImpl implements ProfilePresenter {
                         }
                 );
     }
+
+    @Override
+    public String getName() {
+        return  model.getName();
+    }
+
+    @Override
+    public String getEmail() {
+        return model.getEmail();
+    }
 }
 

@@ -88,6 +88,8 @@ public class RegisterFragment extends Fragment implements  RegisterView{
                 break;
             }
         }
+        login.setOnClickListener( v ->
+                Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment));
         guest.setOnClickListener(v -> presenter.loginAsGuest(this.getContext(), new LoginCallBack() {
             @Override
             public void onSuccess(FirebaseUser user) {

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.yumlyplanner.R;
 import com.example.yumlyplanner.homefragment.presenter.HomePresenterImpl;
@@ -137,6 +138,8 @@ public class HomeFragment extends Fragment implements HomeView,OnHomeRecycleClic
     public void showError(String message) {
         Toast.makeText(requireContext(), "Error"+message, Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public void onResume() {

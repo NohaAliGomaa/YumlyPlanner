@@ -19,22 +19,24 @@ import java.util.List;
 public class AuthenticationModelImpl implements AuthenticationModel {
     private final FirebaseAuth mAuth;
     private  BackupManager backupManager ;
-    private  String userId;
-    FirebaseUser user;
-
+    private  String userId,userName,userEmail;
+   private FirebaseUser user;
+  private SessionManager sessionManager;
     private static final String TAG = "AuthenticationModelImpl";
 
     public AuthenticationModelImpl(MealLocalDataSource localDataSource, Context context) {
         this.mAuth = FirebaseAuth.getInstance();
         backupManager = new BackupManager(localDataSource);
+        sessionManager = SessionManager.getInstance(context);
 
-        if (SessionManager.getInstance(context).isGuestMode()) {
-            userId = "GUEST";  // Assign a dummy ID for guest users
-            Log.i(TAG, "User is in Guest Mode");
+        if (sessionManager.isGuestMode()) {
+            userId = "GUEST";
+            Log.i(TAG, "Guest Mode: userId set to GUEST");
         } else {
-            FirebaseUser user = mAuth.getCurrentUser();
+            user = mAuth.getCurrentUser();
             if (user != null) {
                 userId = user.getUid();
+                Log.i(TAG, "User Logged In: " + userId);
             } else {
                 userId = null;
                 Log.e(TAG, "No authenticated user found!");
@@ -58,6 +60,9 @@ public class AuthenticationModelImpl implements AuthenticationModel {
                         if (user != null && user.isEmailVerified()) {
                             callback.onSuccess(user);
                             userId=user.getUid();
+                            userName = user.getDisplayName();
+                            userEmail = user.getEmail();
+                            sessionManager.saveUserSession(userId, userName, userEmail);
                             restorData(userId);
                         } else {
                             callback.onFailure("Please verify your email!");
@@ -75,6 +80,9 @@ public class AuthenticationModelImpl implements AuthenticationModel {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
+                        userName = user.getDisplayName();
+                        userEmail = user.getEmail();
+                        sessionManager.saveUserSession(userId, userName, userEmail);
                         callback.onSuccess(user);
                         restorData(user.getUid());
                     } else {
@@ -107,6 +115,9 @@ public class AuthenticationModelImpl implements AuthenticationModel {
        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        userName = user.getDisplayName();
+                        userEmail = user.getEmail();
+                        sessionManager.saveUserSession(userId, userName, userEmail);
                         listener.showOnRegisterSuccess("the register is done");
                     } else {
                         listener.showOnRegisterError(task.getException().getMessage());
@@ -119,6 +130,9 @@ public class AuthenticationModelImpl implements AuthenticationModel {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        userName = user.getDisplayName();
+                        userEmail = user.getEmail();
+                        sessionManager.saveUserSession(userId, userName, userEmail);
                         listener.showOnRegisterSuccess("register with google is done");
                     } else {
                         listener.showOnRegisterError(task.getException().getMessage());
@@ -130,17 +144,22 @@ public class AuthenticationModelImpl implements AuthenticationModel {
     @Override
     public void logout(Context context) {
         Log.i(TAG, "logout: Logging out user");
-
-        if (SessionManager.getInstance(context).isGuestMode()) {
-            SessionManager.getInstance(context).setGuestMode(false);
+        SessionManager sessionManager = SessionManager.getInstance(context);
+        if (sessionManager.isGuestMode()) {
+            sessionManager.setGuestMode(false);
             Log.i(TAG, "Guest Mode ended.");
         } else {
             mAuth.signOut();
+            userId = null;
+            user = null;
             GoogleSignIn.getClient(context, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
-                    .signOut()
+                    .revokeAccess()
                     .addOnCompleteListener(task -> Log.i(TAG, "logout: Google Sign-Out successful"));
         }
+        sessionManager.logout();
+        Log.i(TAG, "logout: Session cleared successfully.");
     }
+
 
     @Override
     public void backup(List<Meal> mealList) {
@@ -155,5 +174,17 @@ public class AuthenticationModelImpl implements AuthenticationModel {
     public void restorData(String userId) {
         backupManager.restoreMeals(userId);
     }
+    public boolean checkLoginStatus() {
+        return sessionManager.isLoggedIn();
+
+    }
+    public String getName() {
+        return sessionManager.getUserName();
+    }
+
+    public String getEmail() {
+        return sessionManager.getUserEmail();
+    }
+
 
 }

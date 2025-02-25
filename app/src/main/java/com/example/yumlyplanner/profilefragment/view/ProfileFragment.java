@@ -56,8 +56,8 @@ public class ProfileFragment extends Fragment implements ProfileView {
         back = view.findViewById(R.id.backIV) ;
         backup=view.findViewById(R.id.backup);
         // Example: Set user details (replace with actual data retrieval logic)
-        tvUserName.setText("John Doe");
-        tvUserEmail.setText("john.doe@example.com");
+        tvUserName.setText(presenter.getName());
+        tvUserEmail.setText(presenter.getEmail());
 
         // Set click listeners
         goToFav.setOnClickListener(v -> navigateToFavorites());
