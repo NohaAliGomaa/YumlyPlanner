@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.YumlyPlanner" parent="Base.Theme.YumlyPlanner" />
+    <style name="DialogTheme" parent="Theme.Material3.DayNight.Dialog">
+        <item name="colorAccent" >@color/primaryColor</item>
+        <item name="buttonBarPositiveButtonStyle">@color/primaryColor</item>
+        <item name="buttonBarNegativeButtonStyle">@color/primaryColor</item>
+    </style>
+
 </resources>
