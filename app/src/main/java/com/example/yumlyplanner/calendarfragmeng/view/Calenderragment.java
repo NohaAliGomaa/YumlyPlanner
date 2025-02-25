@@ -16,16 +16,12 @@ import android.widget.CalendarView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yumlyplanner.R;
-import com.example.yumlyplanner.calendarfragmeng.presenter.CalendarPresenter;
 import com.example.yumlyplanner.calendarfragmeng.presenter.CalendarPresenterImpl;
-import com.example.yumlyplanner.homefragment.view.HomeFragmentDirections;
 import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.model.pojo.Meal;
-import com.example.yumlyplanner.singlemeal.view.MealAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +59,9 @@ public class Calenderragment extends Fragment implements com.example.yumlyplanne
         calendarAdapter = new CalendarAdapter(requireContext(), meals, this);
         calendarRecyclerView.setAdapter(calendarAdapter);
 
-        calendarView.setFocusedMonthDateColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
-        calendarView.setSelectedWeekBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
-        calendarView.setUnfocusedMonthDateColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
+        calendarView.setFocusedMonthDateColor(ContextCompat.getColor(requireContext(), R.color.primaryColor));
+        calendarView.setSelectedWeekBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primaryColor));
+        calendarView.setUnfocusedMonthDateColor(ContextCompat.getColor(requireContext(), R.color.primaryColor));
 
         // Handle date selection
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {

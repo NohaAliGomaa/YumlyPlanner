@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:text="Your Meals Plane"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

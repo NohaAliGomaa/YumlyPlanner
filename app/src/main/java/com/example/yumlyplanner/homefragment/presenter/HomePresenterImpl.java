@@ -21,7 +21,6 @@ public class HomePresenterImpl implements HomePresenter ,NetworkCallBack{
     private MealRepositry repository;
     private OnHomeRecycleClick onHomeRecycleClick;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private AuthenticationModelImpl model;
     private static final String TAG = "HomePresenterImpl";
 
     public HomePresenterImpl(HomeView view, OnHomeRecycleClick onHomeRecycleClick, MealLocalDataSource mealLocalDataSource) {

@@ -41,4 +41,6 @@ public interface MealDao {
 
         @Query("UPDATE meals SET date = :newDate WHERE id_meal = :idMeal")
         Completable updateMealDate(String idMeal, @Nullable String newDate);
+        @Query("DELETE FROM meals")
+        void deleteAll();
 }

@@ -32,7 +32,7 @@
             android:layout_marginBottom="30dp"
             android:scaleType="centerInside"
             android:src="@drawable/calender"
-            app:tint="@color/primeryColor"
+            app:tint="@color/primaryColor"
             app:backgroundTint="@color/toneColor"
             app:elevation="12dp"
             app:layout_anchor="@id/bottom_navigation"
@@ -50,7 +50,7 @@
             android:background="@color/white"
             app:itemHorizontalTranslationEnabled="false"
             app:itemIconSize="80dp"
-            app:itemIconTint="@color/primeryColor"
+            app:itemIconTint="@color/primaryColor"
             app:itemTextColor="@color/toneColor"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_navigation"/>

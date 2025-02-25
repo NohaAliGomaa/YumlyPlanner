@@ -2,8 +2,11 @@ package com.example.yumlyplanner.searchfragment.presenter;
 
 import com.example.yumlyplanner.model.MealRepositry;
 import com.example.yumlyplanner.model.local.MealLocalDataSource;
+import com.example.yumlyplanner.model.pojo.Category;
 import com.example.yumlyplanner.searchfragment.view.OnSearchRecycleClick;
 import com.example.yumlyplanner.searchfragment.view.SearchView;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -12,6 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SearchPresenterImpl implements SearchPresenter {
     private SearchView view;
     private final MealRepositry repository;
+
     private final OnSearchRecycleClick onSearchRecycleClick;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 

@@ -36,7 +36,7 @@
         android:layout_marginTop="32dp"
         android:backgroundTint="@color/toneColor"
         android:text="@string/logout"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="User Name"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -63,7 +63,7 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
@@ -76,7 +76,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="User Email"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -89,7 +89,7 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/tv_UserName" />
 
@@ -102,7 +102,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="See Your Meal Plan"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -116,7 +116,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="Backup your Data"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -130,7 +130,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="See Your  Favorite Meal"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />

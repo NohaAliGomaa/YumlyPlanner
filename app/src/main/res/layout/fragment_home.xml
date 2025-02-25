@@ -36,14 +36,14 @@
 
         <TextView
             android:id="@+id/tv_login_username"
-            android:layout_width="173dp"
-            android:layout_height="28dp"
+            android:layout_width="321dp"
+            android:layout_height="35dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
             android:contentDescription="@string/todo"
             android:importantForAccessibility="no"
-            android:text="@string/username"
-            android:textColor="@color/primeryColor"
+            android:text="@string/hello"
+            android:textColor="@color/primaryColor"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/meal_of_the_day"
-            android:textColor="@color/primeryColor"
+            android:textColor="@color/primaryColor"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
-                    android:background="@color/primeryColor"
+                    android:background="@color/primaryColor"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -153,7 +153,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/Category"
-                    android:textColor="@color/primeryColor" />
+                    android:textColor="@color/primaryColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -172,7 +172,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/ingredient"
-                    android:textColor="@color/primeryColor" />
+                    android:textColor="@color/primaryColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -191,7 +191,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/country"
-                    android:textColor="@color/primeryColor" />
+                    android:textColor="@color/primaryColor" />
             </LinearLayout>
         </com.google.android.material.chip.ChipGroup>
 

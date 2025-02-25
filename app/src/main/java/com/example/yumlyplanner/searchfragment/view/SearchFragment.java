@@ -46,6 +46,9 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
     private Chip categoryChip, ingredientChip, countryChip;
     private ChipGroup chipGroup;
     private RecyclerView recyclerView;
+
+    private enum SearchType { CATEGORY, INGREDIENT, COUNTRY, LETTER }
+    private SearchType currentSearchType = SearchType.LETTER;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SearchFragment() {
@@ -78,28 +81,37 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
         ingredientChip = view.findViewById(R.id.ingredient_chip);
         countryChip = view.findViewById(R.id.country_chip);
 
-        chipGroup.setOnCheckedChangeListener((chipGroup, id) -> {
-            if (id != -1) { // Ensure a chip is selected
-                Chip chip = view.findViewById(id);
-                if (chip != null) {
-                    for (int i = 0; i < chipGroup.getChildCount(); ++i) {
-                        chipGroup.getChildAt(i).setClickable(true);
-                    }
-                    chip.setClickable(false);
-                }
+        chipGroup.setOnCheckedChangeListener((group, id) -> {
+            if (id == categoryChip.getId()) {
+                currentSearchType = SearchType.CATEGORY;
+                presenter.getAllCategories();
+            } else if (id == ingredientChip.getId()) {
+                currentSearchType = SearchType.INGREDIENT;
+                presenter.getIngredient();
+            } else if (id == countryChip.getId()) {
+                currentSearchType = SearchType.COUNTRY;
+                showAllAreas(); // Load all areas immediately
             }
         });
-
         countryChip.setOnClickListener(v -> {
             List<Area> areas = AllArea.getInstance().getAllArea();
             SearchAdapter<Area> adapter = new SearchAdapter<>(areas, this);
             recyclerView.setAdapter(adapter);
         });
 
-        ingredientChip.setOnClickListener(v -> presenter.getIngredient());
-        categoryChip.setOnClickListener(v -> presenter.getAllCategories());
+        ingredientChip.setOnClickListener(v -> {
+            presenter.getIngredient();
+        });
+        categoryChip.setOnClickListener(v -> {
+            presenter.getAllCategories();
+        });
         setWatcherForSearch(search);
         back.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_homeFragment));
+    }
+    private void showAllAreas() {
+        List<Area> areas = AllArea.getInstance().getAllArea();
+        SearchAdapter<Area> adapter = new SearchAdapter<>(areas, this);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setWatcherForSearch(EditText search) {
@@ -110,8 +122,22 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0) { // Prevent crash when empty
-                    presenter.getMealListWithLetter(s.charAt(0));
+                if (s.length() > 0) {
+                    String query = s.toString();
+                    switch (currentSearchType) {
+                        case CATEGORY:
+                            presenter.getMealbyCategory(query);
+                            break;
+                        case INGREDIENT:
+                            presenter.getMealbycIngredient(query);
+                            break;
+                        case COUNTRY:
+                            presenter.getMealbyCountry(query);
+                            break;
+                        case LETTER:
+                            presenter.getMealListWithLetter(query.charAt(0));
+                            break;
+                    }
                 }
             }
 
@@ -121,7 +147,7 @@ public class SearchFragment extends Fragment implements SearchView, OnSearchRecy
         });
     }
 
-    @Override
+        @Override
     public void showIngredient(List<Ingredient> ingredients) {
         SearchAdapter<Ingredient> adapter = new SearchAdapter<>(ingredients, this);
         recyclerView.setAdapter(adapter);

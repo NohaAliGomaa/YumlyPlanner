@@ -55,7 +55,7 @@
                 android:layout_height="11dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:background="@color/primeryColor"
+                android:background="@color/primaryColor"
                 app:srcCompat="@drawable/rectangle_73" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/title"
-                android:textColor="@color/primeryColor"
+                android:textColor="@color/primaryColor"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Category"
-                    android:textColor="@color/primeryColor"
+                    android:textColor="@color/primaryColor"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/cuntry"
-                    android:textColor="@color/primeryColor"
+                    android:textColor="@color/primaryColor"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/ingredant"
-                android:textColor="@color/primeryColor"
+                android:textColor="@color/primaryColor"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/instruction"
-                android:textColor="@color/primeryColor"
+                android:textColor="@color/primaryColor"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/instruction"
-                android:textColor="@color/primeryColor" />
+                android:textColor="@color/primaryColor" />
 
             <WebView
                 android:id="@+id/mealVideo"
@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/primeryColor"
+                android:backgroundTint="@color/primaryColor"
                 android:text="@string/add"
                 android:textColor="@color/toneColor" />
 

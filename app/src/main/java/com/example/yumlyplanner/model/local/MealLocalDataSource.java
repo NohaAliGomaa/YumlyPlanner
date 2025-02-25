@@ -80,4 +80,8 @@ public class MealLocalDataSource {
      {
          return dao.getAllMeals();
      }
+     public  void  deleteAll()
+     {
+         dao.deleteAll();
+     }
 }

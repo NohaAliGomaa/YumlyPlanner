@@ -3,16 +3,13 @@ package com.example.yumlyplanner.singlemeal.view;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,15 +26,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yumlyplanner.R;
-import com.example.yumlyplanner.homefragment.view.HomeAdapter;
-import com.example.yumlyplanner.loginfragment.view.LoginFragment;
 import com.example.yumlyplanner.model.authentication.SessionManager;
 import com.example.yumlyplanner.model.local.MealLocalDataSource;
-import com.example.yumlyplanner.model.pojo.Area;
 import com.example.yumlyplanner.model.pojo.Meal;
 import com.example.yumlyplanner.singlemeal.presenter.SingleMealPresenterImpl;
-
-import java.time.Year;
 
 public class MealFragment extends Fragment implements SingleMealView{
     private ImageView mealPhotoView, addToFavouritBtn, backToHome;
@@ -139,8 +131,8 @@ public class MealFragment extends Fragment implements SingleMealView{
                     }, 2025, 1, 20);
 
             datePickerDialog.show();
-            datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
-            datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primeryColor));
+            datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primaryColor));
+            datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primaryColor));
 
 
 

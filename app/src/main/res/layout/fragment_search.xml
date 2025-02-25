@@ -29,8 +29,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/searchhint"
-        app:hintTextColor="@color/primeryColor"
-        app:boxStrokeColor="@color/primeryColor"
+        app:hintTextColor="@color/primaryColor"
+        app:boxStrokeColor="@color/primaryColor"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -78,7 +78,7 @@
                 android:checkable="true"
                 android:clickable="true"
                 android:text="@string/Category"
-                android:textColor="@color/primeryColor" />
+                android:textColor="@color/primaryColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +96,7 @@
                 android:checkable="true"
                 android:clickable="true"
                 android:text="@string/ingredient"
-                android:textColor="@color/primeryColor" />
+                android:textColor="@color/primaryColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +114,7 @@
                 android:checkable="true"
                 android:clickable="true"
                 android:text="@string/country"
-                android:textColor="@color/primeryColor" />
+                android:textColor="@color/primaryColor" />
         </LinearLayout>
     </com.google.android.material.chip.ChipGroup>
 

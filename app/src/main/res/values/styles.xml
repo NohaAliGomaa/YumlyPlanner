@@ -2,12 +2,11 @@
 <resources>
     <style name="Theme.App" parent="Theme.Material3.Light">
         ...
-        <item name="colorSecondary">@color/primeryColor</item>
+        <item name="colorSecondary">@color/primaryColor</item>
         <item name="colorSurface">@color/toneColor</item>
-        <item name="colorOnSurfaceVariant">@color/primeryColor</item>
+        <item name="colorOnSurfaceVariant">@color/primaryColor</item>
         <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.App.Corner.Medium</item>
     </style>
-
     <style name="ShapeAppearance.App.Corner.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">8dp</item>
@@ -22,14 +21,14 @@
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="CustomAlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
-        <item name="android:textColorPrimary">@color/primeryColor</item>
+        <item name="android:textColorPrimary">@color/primaryColor</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/AlertDialogButton</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/AlertDialogButton</item>
         <item name="android:buttonBarNeutralButtonStyle">@style/AlertDialogButton</item>
     </style>
 
     <style name="AlertDialogButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/primeryColor</item>
+        <item name="android:textColor">@color/primaryColor</item>
     </style>
 
 </resources>

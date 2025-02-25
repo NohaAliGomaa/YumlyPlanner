@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>  <!-- White for text/icons -->
+    <color name="white">#FF121212</color>  <!-- Dark background -->
+    <color name="primaryColor">#388E3C</color>  <!-- Darker green for primary -->
+    <color name="toneColor">#1B5E20</color>  <!-- Darker background tone -->
+</resources>

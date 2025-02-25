@@ -2,7 +2,6 @@ package com.example.yumlyplanner.model.authentication;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.example.yumlyplanner.model.local.MealLocalDataSource;
 import com.example.yumlyplanner.model.network.LoginCallBack;
 import com.example.yumlyplanner.model.network.RegisterCallBack;
@@ -13,57 +12,68 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
+import com.google.firebase.auth.UserProfileChangeRequest;
 import java.util.List;
 
 public class AuthenticationModelImpl implements AuthenticationModel {
     private final FirebaseAuth mAuth;
-    private  BackupManager backupManager ;
-    private  String userId,userName,userEmail;
-   private FirebaseUser user;
-  private SessionManager sessionManager;
+    private final BackupManager backupManager;
+    private final SessionManager sessionManager;
+    private FirebaseUser user;
+    private String userId, userName, userEmail;
+    private  MealLocalDataSource localDataSource;
     private static final String TAG = "AuthenticationModelImpl";
 
     public AuthenticationModelImpl(MealLocalDataSource localDataSource, Context context) {
         this.mAuth = FirebaseAuth.getInstance();
-        backupManager = new BackupManager(localDataSource);
-        sessionManager = SessionManager.getInstance(context);
+        this.backupManager = new BackupManager(localDataSource);
+        this.localDataSource=localDataSource;
+        this.sessionManager = SessionManager.getInstance(context);
 
         if (sessionManager.isGuestMode()) {
             userId = "GUEST";
+            userName = "Guest User";
+            userEmail = "N/A";
             Log.i(TAG, "Guest Mode: userId set to GUEST");
         } else {
             user = mAuth.getCurrentUser();
             if (user != null) {
                 userId = user.getUid();
+                userName = user.getDisplayName() != null ? user.getDisplayName() : "N/A";
+                userEmail = user.getEmail() != null ? user.getEmail() : "N/A";
                 Log.i(TAG, "User Logged In: " + userId);
             } else {
                 userId = null;
+                userName = "N/A";
+                userEmail = "N/A";
                 Log.e(TAG, "No authenticated user found!");
             }
         }
     }
+
     public void loginAsGuest(Context context, LoginCallBack callback) {
-        SessionManager.getInstance(context).setGuestMode(true);
-        userId = "GUEST"; // Assign a dummy ID
-        callback.onSuccess(null); // No FirebaseUser object needed for guest mode
+        sessionManager.setGuestMode(true);
+        userId = "GUEST";
+        userName = "Guest User";
+        userEmail = "N/A";
+        callback.onSuccess(null);
         Log.i(TAG, "User logged in as Guest");
     }
-
 
     @Override
     public void loginWithEmail(String email, String password, LoginCallBack callback) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
+                        user = mAuth.getCurrentUser();
                         if (user != null && user.isEmailVerified()) {
-                            callback.onSuccess(user);
-                            userId=user.getUid();
-                            userName = user.getDisplayName();
-                            userEmail = user.getEmail();
+                            userId = user.getUid();
+                            userName = user.getDisplayName() != null ? user.getDisplayName() : "Unknown User";
+                            userEmail = user.getEmail() != null ? user.getEmail() : "No Email";
+
                             sessionManager.saveUserSession(userId, userName, userEmail);
                             restorData(userId);
+                            callback.onSuccess(user);
                         } else {
                             callback.onFailure("Please verify your email!");
                         }
@@ -79,16 +89,40 @@ public class AuthenticationModelImpl implements AuthenticationModel {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        userName = user.getDisplayName();
-                        userEmail = user.getEmail();
-                        sessionManager.saveUserSession(userId, userName, userEmail);
-                        callback.onSuccess(user);
-                        restorData(user.getUid());
+                        user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            userId = user.getUid();
+                            userName = user.getDisplayName() != null ? user.getDisplayName() : "Unknown User";
+                            userEmail = user.getEmail() != null ? user.getEmail() : "No Email";
+
+                            sessionManager.saveUserSession(userId, userName, userEmail);
+                            restorData(userId);
+                            callback.onSuccess(user);
+                        }
                     } else {
                         callback.onFailure(task.getException().getMessage());
                     }
                 });
+    }
+    @Override
+    public void signInWithGoogle(AuthCredential credential, RegisterCallBack listener) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            userId = user.getUid();
+                            userName = user.getDisplayName() != null ? user.getDisplayName() : "Unknown User";
+                            userEmail = user.getEmail() != null ? user.getEmail() : "No Email";
+
+                            sessionManager.saveUserSession(userId, userName, userEmail);}
+                        listener.showOnRegisterSuccess("register with google is done");
+                    } else {
+                        listener.showOnRegisterError(task.getException().getMessage());
+                    }
+                });
+
+
     }
 
     @Override
@@ -97,7 +131,6 @@ public class AuthenticationModelImpl implements AuthenticationModel {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
                         if (task.getResult().getAdditionalUserInfo().isNewUser()) {
                             callback.showOnRegisterSuccess("Registration successful!");
                         } else {
@@ -109,42 +142,37 @@ public class AuthenticationModelImpl implements AuthenticationModel {
                 });
     }
 
-
     @Override
     public void registerUser(String email, String password, RegisterCallBack listener) {
-       mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        userName = user.getDisplayName();
-                        userEmail = user.getEmail();
-                        sessionManager.saveUserSession(userId, userName, userEmail);
-                        listener.showOnRegisterSuccess("the register is done");
+                        user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            userId = user.getUid();
+                            userEmail = user.getEmail() != null ? user.getEmail() : "No Email";
+
+                            // Set default display name
+                            user.updateProfile(new UserProfileChangeRequest.Builder()
+                                            .setDisplayName("New User")
+                                            .build())
+                                    .addOnCompleteListener(updateTask -> {
+                                        userName = user.getDisplayName();
+                                        sessionManager.saveUserSession(userId, userName, userEmail);
+                                        listener.showOnRegisterSuccess("Registration successful");
+                                    });
+                        } else {
+                            listener.showOnRegisterError("User registration failed: FirebaseUser is null.");
+                        }
                     } else {
                         listener.showOnRegisterError(task.getException().getMessage());
                     }
                 });
-    }
-
-    @Override
-    public void signInWithGoogle(AuthCredential credential, RegisterCallBack listener) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        userName = user.getDisplayName();
-                        userEmail = user.getEmail();
-                        sessionManager.saveUserSession(userId, userName, userEmail);
-                        listener.showOnRegisterSuccess("register with google is done");
-                    } else {
-                        listener.showOnRegisterError(task.getException().getMessage());
-                    }
-                });
-
     }
 
     @Override
     public void logout(Context context) {
-        Log.i(TAG, "logout: Logging out user");
-        SessionManager sessionManager = SessionManager.getInstance(context);
+        Log.i(TAG, "Logging out user");
         if (sessionManager.isGuestMode()) {
             sessionManager.setGuestMode(false);
             Log.i(TAG, "Guest Mode ended.");
@@ -154,12 +182,15 @@ public class AuthenticationModelImpl implements AuthenticationModel {
             user = null;
             GoogleSignIn.getClient(context, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
                     .revokeAccess()
-                    .addOnCompleteListener(task -> Log.i(TAG, "logout: Google Sign-Out successful"));
+                    .addOnCompleteListener(task -> Log.i(TAG, "Google Sign-Out successful"));
         }
         sessionManager.logout();
-        Log.i(TAG, "logout: Session cleared successfully.");
+        new Thread(() -> {
+            localDataSource.deleteAll();
+            Log.i(TAG, "Room database cleared successfully.");
+        }).start();
+        Log.i(TAG, "Session cleared successfully.");
     }
-
 
     @Override
     public void backup(List<Meal> mealList) {
@@ -174,10 +205,11 @@ public class AuthenticationModelImpl implements AuthenticationModel {
     public void restorData(String userId) {
         backupManager.restoreMeals(userId);
     }
+
     public boolean checkLoginStatus() {
         return sessionManager.isLoggedIn();
-
     }
+
     public String getName() {
         return sessionManager.getUserName();
     }
@@ -185,6 +217,4 @@ public class AuthenticationModelImpl implements AuthenticationModel {
     public String getEmail() {
         return sessionManager.getUserEmail();
     }
-
-
 }

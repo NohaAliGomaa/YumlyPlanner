@@ -27,7 +27,7 @@
         android:layout_marginBottom="32dp"
         android:text="TextView"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textSize="20sp"
 
         app:layout_constraintBottom_toBottomOf="@+id/ingredientImage"
@@ -43,7 +43,7 @@
         android:layout_marginTop="4dp"
         android:text="TextView"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@color/primeryColor"
+        android:textColor="@color/primaryColor"
         android:textSize="20sp"
 
         app:layout_constraintStart_toEndOf="@+id/ingredientImage"
