@@ -6,11 +6,13 @@ import android.util.Log;
 import androidx.room.Query;
 
 import com.example.yumlyplanner.model.pojo.Meal;
+import com.example.yumlyplanner.model.response.MealResponse;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealLocalDataSource {
     private MealDao dao;
@@ -41,8 +43,15 @@ public class MealLocalDataSource {
         return dao.getAllPlanedMeal();
     }
     public Completable insert(Meal meal) {
-         return    dao.insertAll(meal);
-
+        Log.d("Restore", "Meal inserted: " + meal.getStrMeal());
+            return dao.insertAll(meal);
+    }
+    public  void insertMeals(List<Meal> meals)
+    {
+        for(Meal meal:meals)
+        { Log.d("Restore", "Meal from insertMeals inserted: " + meal.getStrMeal());
+            dao.insertAll(meal);
+        }
     }
 
     public Completable delete(Meal meal) {
@@ -67,4 +76,8 @@ public class MealLocalDataSource {
 
         return  dao.getMealsByDate(selectedDate);
     }
+     public  Single<List<Meal>> getAllMeals()
+     {
+         return dao.getAllMeals();
+     }
 }

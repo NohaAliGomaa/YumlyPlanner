@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.yumlyplanner.R;
 import com.example.yumlyplanner.loginfragment.presenter.LoginPresenter;
 import com.example.yumlyplanner.loginfragment.presenter.LoginPresenterImpl;
+import com.example.yumlyplanner.model.local.MealLocalDataSource;
+import com.example.yumlyplanner.model.network.LoginCallBack;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,10 +31,11 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginFragment extends Fragment  implements LoginView {
-    private Button login,signUp;
+    private Button login,signUp,guest;
     private TextInputEditText email;
     private TextInputEditText password;
     private LoginPresenter presenter;
@@ -46,7 +49,7 @@ public class LoginFragment extends Fragment  implements LoginView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       presenter=new LoginPresenterImpl(this);
+       presenter=new LoginPresenterImpl(this, MealLocalDataSource.getInstance(this.getContext()),this.getContext());
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -64,6 +67,7 @@ public class LoginFragment extends Fragment  implements LoginView {
         signUp=view.findViewById(R.id.registerButton);
         email=view.findViewById(R.id.et_Email);
         password=view.findViewById(R.id.et_Password);
+        guest=view.findViewById(R.id.skipBtn);
         return view;
     }
 
@@ -81,6 +85,18 @@ public class LoginFragment extends Fragment  implements LoginView {
 //        if (GoogleSignIn.getLastSignedInAccount(requireContext()) != null) {
 //            navigateToHome();
 //        }
+        guest.setOnClickListener(v -> presenter.loginAsGuest(this.getContext(), new LoginCallBack() {
+            @Override
+            public void onSuccess(FirebaseUser user) {
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_SHORT).show();
+                navigateToHome();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(getContext(), "Authentication failed: " , Toast.LENGTH_LONG).show();
+            }
+        }));
         signInButton.setOnClickListener(v -> signInWithGoogle());
         login.setOnClickListener(v -> presenter.handleEmailLogin(email.getText().toString(), password.getText().toString()));
         signUp.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment));

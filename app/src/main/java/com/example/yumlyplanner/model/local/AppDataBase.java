@@ -8,11 +8,13 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
+import com.example.yumlyplanner.model.authentication.MealTypeConverter;
 import com.example.yumlyplanner.model.pojo.Meal;
 
-@Database(entities = {Meal.class}, version = 2, exportSchema = false)
+@Database(entities = {Meal.class}, version = 2)
 public  abstract  class AppDataBase  extends RoomDatabase {
     private static AppDataBase instance = null;
 

@@ -3,8 +3,11 @@ package com.example.yumlyplanner.model.pojo;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.example.yumlyplanner.homefragment.view.BindableItem;
+import com.example.yumlyplanner.model.authentication.MealTypeConverter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,8 +168,6 @@ public class Meal  implements BindableItem {
 
     @ColumnInfo(name = "MealMeasure19")
     public String strMeasure19;
-
-
     @ColumnInfo(name = "MealMeasure20")
     public String strMeasure20;
     @ColumnInfo(name = "isFavourit")
@@ -283,6 +284,7 @@ public class Meal  implements BindableItem {
         addIfNotEmpty(measures, strMeasure20);
         return measures;
     }
+
 
     private void addIfNotEmpty(List<String> list, String value) {
         if (value != null && !value.trim().isEmpty()) {

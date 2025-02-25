@@ -8,14 +8,18 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.yumlyplanner.model.pojo.Meal;
+import com.example.yumlyplanner.model.response.MealResponse;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface MealDao {
+        @Query("SELECT * FROM meals")
+        Single<List<Meal>> getAllMeals();
         @Query("SELECT * FROM meals WHERE isFavourit = 1")
         Flowable<List<Meal>> getAllFavouritMeal();
         @Query("SELECT * FROM meals WHERE date = :selectedDate")
@@ -24,10 +28,8 @@ public interface MealDao {
         @Query("SELECT * FROM meals WHERE date IS NOT NULL")
         Flowable<List<Meal>> getAllPlanedMeal();
 
-        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
         Completable insertAll(Meal meal);
-
-
         @Delete
         Completable deleteMealById(Meal meal);
 

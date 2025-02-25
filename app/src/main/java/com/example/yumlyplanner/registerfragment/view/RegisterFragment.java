@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.yumlyplanner.R;
 import com.example.yumlyplanner.homefragment.view.HomeFragment;
+import com.example.yumlyplanner.model.local.MealLocalDataSource;
+import com.example.yumlyplanner.model.network.LoginCallBack;
 import com.example.yumlyplanner.registerfragment.presenter.RegisterPresenter;
 import com.example.yumlyplanner.registerfragment.presenter.RegisterPresenterImpl;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -30,12 +32,13 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class RegisterFragment extends Fragment implements  RegisterView{
 
-    private Button login,signUp;
+    private Button login,signUp,guest;
     private TextInputEditText email,userName;
     private TextInputEditText password,confirmPassword;
     private GoogleSignInClient googleSignInClient;
@@ -55,7 +58,7 @@ public class RegisterFragment extends Fragment implements  RegisterView{
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
-        presenter = new RegisterPresenterImpl(this );
+        presenter = new RegisterPresenterImpl(this, MealLocalDataSource.getInstance(this.getContext()),this.getContext());
 
     }
 
@@ -76,6 +79,7 @@ public class RegisterFragment extends Fragment implements  RegisterView{
         userName=view.findViewById(R.id.et_Name);
         email=view.findViewById(R.id.et_Email);
         password=view.findViewById(R.id.et_Password);
+        guest=view.findViewById(R.id.skipBtn);
         confirmPassword=view.findViewById(R.id.et_Password_confirm);
         for (int i = 0; i < signInButton.getChildCount(); i++) {
             View v = signInButton.getChildAt(i);
@@ -84,7 +88,18 @@ public class RegisterFragment extends Fragment implements  RegisterView{
                 break;
             }
         }
+        guest.setOnClickListener(v -> presenter.loginAsGuest(this.getContext(), new LoginCallBack() {
+            @Override
+            public void onSuccess(FirebaseUser user) {
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_SHORT).show();
+                navigateToHome();
+            }
 
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(getContext(), "Authentication failed: " , Toast.LENGTH_LONG).show();
+            }
+        }));
 
         signUp.setOnClickListener(v -> {
             String userEmail = email.getText().toString().trim();

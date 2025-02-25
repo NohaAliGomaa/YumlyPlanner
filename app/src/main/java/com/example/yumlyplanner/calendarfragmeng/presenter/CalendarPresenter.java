@@ -11,5 +11,6 @@ public interface CalendarPresenter {
     public void delete(Meal meal);
     public void getMealsByDate(String selectedDate);
     public void getAllPlanedMeal();
-
+    public void backup(List<Meal> mealList);
+    public void restorData();
 }

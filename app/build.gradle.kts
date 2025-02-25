@@ -72,8 +72,31 @@ dependencies {
 
     implementation ("com.jakewharton.rxbinding4:rxbinding:4.0.0")
 
-
-    //implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
+    // Firebase Firestore
+    implementation("com.google.firebase:firebase-firestore:24.9.1")
+
+// Firebase Authentication (if needed)
+    implementation ("com.google.firebase:firebase-auth:22.3.1")
+
+// Room Database
+    implementation ("androidx.room:room-runtime:2.5.2")
+    annotationProcessor ("androidx.room:room-compiler:2.5.2")
+
+// RxJava support for Room (if using RxJava)
+    implementation ("androidx.room:room-rxjava3:2.5.2")
+
+// WorkManager (if you want automatic scheduled backups)
+    implementation ("androidx.work:work-runtime:2.8.1")
+
+    implementation ("com.google.code.gson:gson:2.10.1")
+    // Import the BoM for the Firebase platform
+    implementation (platform("com.google.firebase:firebase-bom:32.0.0"))
+
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore")
+
+
 
 }

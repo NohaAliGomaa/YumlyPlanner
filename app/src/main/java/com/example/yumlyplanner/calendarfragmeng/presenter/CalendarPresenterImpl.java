@@ -81,4 +81,14 @@ public class CalendarPresenterImpl implements CalendarPresenter {
                 );
     }
 
+    @Override
+    public void backup(List<Meal> mealList) {
+
+    }
+
+    @Override
+    public void restorData() {
+
+    }
+
 }

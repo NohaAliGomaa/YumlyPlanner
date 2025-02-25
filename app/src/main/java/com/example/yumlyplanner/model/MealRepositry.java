@@ -104,4 +104,13 @@ public class MealRepositry {
         Log.i(TAG, "repo getMealsByDate: the date is"+selectedDate);
         return localDataSource.getMealsByDate(selectedDate);
     }
+    public Single<List<Meal>>  getAllMeals()
+    {
+        return  localDataSource.getAllMeals();
+    }
+    public  void insertMeals(List<Meal> meals)
+    {
+       localDataSource.insertMeals(meals);
+    }
+
 }
